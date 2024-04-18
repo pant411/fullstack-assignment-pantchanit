@@ -1,36 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, HttpStatus } from '@nestjs/common';
 import { UsersUniversityStatusService } from './users-university-status.service';
-import { CreateUsersUniversityStatusDto } from './dto/create-users-university-status.dto';
-import { UpdateUsersUniversityStatusDto } from './dto/update-users-university-status.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { ResponseModel } from 'src/shared/responses/resposne.interface';
+import { UsersUniversityStatus } from './shared/entities/users-university-status.entity';
 
-@Controller('users-university-status')
+@Controller('api/v1/users-university-status')
 @ApiTags('User University Status')
 export class UsersUniversityStatusController {
   constructor(private readonly usersUniversityStatusService: UsersUniversityStatusService) {}
 
-  @Post()
-  create(@Body() createUsersUniversityStatusDto: CreateUsersUniversityStatusDto) {
-    return this.usersUniversityStatusService.create(createUsersUniversityStatusDto);
-  }
-
   @Get()
-  findAll() {
-    return this.usersUniversityStatusService.findAll();
+  async findAll(): Promise<ResponseModel<UsersUniversityStatus[]>> {
+    const data = await this.usersUniversityStatusService.findAll();
+    return {
+      data,
+      message: 'Found status',
+      statusCode: HttpStatus.OK,
+    };
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersUniversityStatusService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUsersUniversityStatusDto: UpdateUsersUniversityStatusDto) {
-    return this.usersUniversityStatusService.update(+id, updateUsersUniversityStatusDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersUniversityStatusService.remove(+id);
-  }
 }

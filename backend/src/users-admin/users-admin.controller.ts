@@ -13,11 +13,12 @@ import { UserAdminService } from './users-admin.service';
 import { ResponseModel } from 'src/shared/responses/resposne.interface';
 import { ResetPasswordDto, UpdateUserDto } from './dto/update-user.dto';
 import { UserAdmin } from './shared/entities/user-admin.entity';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('api/v1/users-admin')
 @ApiTags('Users Admin')
+@ApiBearerAuth()
 export class UserAdminController {
   constructor(private readonly userService: UserAdminService) { }
 

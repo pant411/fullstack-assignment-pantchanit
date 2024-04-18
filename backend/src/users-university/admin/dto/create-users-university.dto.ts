@@ -4,12 +4,14 @@ import {
   IsEmail,
   IsIn,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
 } from 'class-validator';
 import { GENDER } from 'src/users-admin/shared/enums/gender.enum';
+import { ROLE_USER_UNIVERSITY } from 'src/users-university/shared/enums/role-user-university.enum';
 
-export class RegisterDto {
+export class CreateUsersUniversityDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
@@ -23,12 +25,7 @@ export class RegisterDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsEmail()
-  email: string;  
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  password: string;  
+  email: string;    
 
   @ApiProperty()
   @IsNotEmpty()
@@ -44,16 +41,44 @@ export class RegisterDto {
   @IsNotEmpty()
   @IsString()
   phoneNumber: string;
-}
-
-export class LoginDto {
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsEmail()
-  email: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  password: string;
+  address: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  subDistrict: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  city: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  province: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  country: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  zipCode: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsIn([ROLE_USER_UNIVERSITY.STUDENT,ROLE_USER_UNIVERSITY.TEACHER])
+  role: ROLE_USER_UNIVERSITY;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  statusId: number;
 }

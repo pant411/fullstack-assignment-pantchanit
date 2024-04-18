@@ -22,12 +22,6 @@ export class AuthenticationAdminMiddleware implements NestMiddleware {
       const decoded = this.jwtService.verify(token, {
         secret: this.configService.get<string>('JWT_SECRET'),
       });
-      // console.log(decoded);
-      if (decoded['role'] !== ROLE.ADMIN) {
-        throw new UnauthorizedException(
-          'You do not have permission to access this resource',
-        );
-      }
       req['user'] = decoded;
       next();
     } catch (error) {
