@@ -9,9 +9,11 @@ import {
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './dto/create-auth.dto';
 import { ResponseModel } from 'src/shared/responses/resposne.interface';
+import { ApiTags } from '@nestjs/swagger';
 
 @UseInterceptors(ClassSerializerInterceptor)
-@Controller('api/v1/auth')
+@Controller('api/v1/auth/admin')
+@ApiTags('Auth Admin')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
