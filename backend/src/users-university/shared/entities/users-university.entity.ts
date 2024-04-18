@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -11,7 +12,7 @@ import { GENDER } from 'src/users-admin/shared/enums/gender.enum';
 import { ROLE_USER_UNIVERSITY } from '../enums/role-user-university.enum';
 import { UsersUniversityStatus } from 'src/users-university-status/shared/entities/users-university-status.entity';
 
-@Entity({ name: 'users_admin' })
+@Entity({ name: 'users_university' })
 export class UsersUniversity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -67,9 +68,10 @@ export class UsersUniversity {
   })
   role: ROLE_USER_UNIVERSITY;
 
-  @Column()
+  @Column({ name: 'status_id' })
   statusId: number;
   @ManyToOne(() => UsersUniversityStatus, (usersUniversityStatus) => usersUniversityStatus.usersUniversities)
+  @JoinColumn({name: 'statusId'})
   usersUniversityStatus: UsersUniversityStatus;
 
   @CreateDateColumn({ name: 'created_at' })

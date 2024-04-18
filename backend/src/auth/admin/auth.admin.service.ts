@@ -5,12 +5,12 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { LoginDto, RegisterDto } from './dto/create-auth.dto';
-import BcryptService from './shared/services/bcrypt.service';
+import BcryptService from '../shared/services/bcrypt.service';
 import { UserAdminRepository } from 'src/users-admin/shared/repositories/user-admin.repository';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
-export class AuthService {
+export class AuthAdminService {
   constructor(
     private readonly userAdminRepository: UserAdminRepository,
     private readonly bcryptService: BcryptService,

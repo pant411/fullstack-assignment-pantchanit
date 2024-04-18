@@ -1,3 +1,4 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsDateString,
   IsEmail,
@@ -10,44 +11,49 @@ import { GENDER } from 'src/users-admin/shared/enums/gender.enum';
 import { ROLE } from 'src/users-admin/shared/enums/role.enum';
 
 export class RegisterDto {
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   firstname: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   lastname: string;
 
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;  
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  password: string;  
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsDateString()
+  DOB: Date; // dateOfBirth 
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsIn([GENDER.FEMALE, GENDER.MALE, GENDER.NOT_SPECIFIED])
+  gender: GENDER;  
+
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   phoneNumber: string;
-
-  @IsNotEmpty()
-  @IsEmail()
-  email: string;
-
-  @IsNotEmpty()
-  @IsString()
-  password: string;
-
-  @IsOptional()
-  @IsIn([GENDER.FEMALE, GENDER.MALE, GENDER.NOT_SPECIFIED])
-  gender: GENDER;
-
-  @IsOptional()
-  @IsIn([ROLE.ADMIN, ROLE.CUSTOMER])
-  role: ROLE;
-
-  @IsNotEmpty()
-  @IsDateString()
-  DOB: Date; // dateOfBirth
 }
 
 export class LoginDto {
+  @ApiProperty()
   @IsNotEmpty()
   @IsEmail()
   email: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   password: string;

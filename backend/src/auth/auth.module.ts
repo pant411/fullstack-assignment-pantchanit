@@ -1,6 +1,6 @@
-import { Module, OnModuleInit } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
+import { Module } from '@nestjs/common';
+import { AuthAdminService } from './admin/auth.admin.service';
+import { AuthAdminController } from './admin/auth.admin.controller';
 import BcryptService from 'src/auth/shared/services/bcrypt.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -25,8 +25,8 @@ import { UserSeederService } from './shared/seeders/users/user.seeder';
     TypeOrmModule.forFeature([UserAdmin]),
     UserAdminModule,
   ],
-  controllers: [AuthController],
-  providers: [AuthService, BcryptService, UserSeederService],
+  controllers: [AuthAdminController],
+  providers: [AuthAdminService, BcryptService, UserSeederService],
   exports: [UserSeederService],
 })
 export class AuthModule {}
