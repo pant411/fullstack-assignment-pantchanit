@@ -39,6 +39,6 @@ import { UsersUniversityStatusModule } from './users-university-status/users-uni
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthenticationAdminMiddleware).forRoutes('api/v1/admin/*', 'api/v1/users-admin/*');
+    consumer.apply(AuthenticationAdminMiddleware).forRoutes('api/v1/admin/*');
   }
 }

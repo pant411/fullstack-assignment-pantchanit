@@ -52,6 +52,7 @@ export class AuthAdminService {
       email: existUser.email,
       firstname: existUser.firstname,
       lastname: existUser.lastname,
+      role: 'Admin'
     };
 
     const accessToken = await this.jwtService.signAsync(payload);

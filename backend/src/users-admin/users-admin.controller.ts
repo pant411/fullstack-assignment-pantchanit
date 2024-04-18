@@ -16,7 +16,7 @@ import { UserAdmin } from './shared/entities/user-admin.entity';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @UseInterceptors(ClassSerializerInterceptor)
-@Controller('api/v1/users-admin')
+@Controller('api/v1/admin/users')
 @ApiTags('Users Admin')
 @ApiBearerAuth()
 export class UserAdminController {

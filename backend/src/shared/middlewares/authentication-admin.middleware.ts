@@ -4,7 +4,6 @@ import { JsonWebTokenError, JwtService, TokenExpiredError } from '@nestjs/jwt';
 import { Request, Response, NextFunction } from 'express';
 import { UnauthorizedException } from '@nestjs/common'; // Update import
 import { ForbiddenException } from '@nestjs/common'; // Add this import
-import { ROLE } from 'src/users-admin/shared/enums/role.enum';
 
 @Injectable()
 export class AuthenticationAdminMiddleware implements NestMiddleware {
@@ -22,6 +21,12 @@ export class AuthenticationAdminMiddleware implements NestMiddleware {
       const decoded = this.jwtService.verify(token, {
         secret: this.configService.get<string>('JWT_SECRET'),
       });
+      // console.log(decoded);
+      if (decoded['role'] !== 'Admin') {
+        throw new UnauthorizedException(
+          'You do not have permission to access this resource',
+        );
+      }
       req['user'] = decoded;
       next();
     } catch (error) {

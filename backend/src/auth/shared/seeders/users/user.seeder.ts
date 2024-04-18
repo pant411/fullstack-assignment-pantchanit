@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import BcryptService from 'src/auth/shared/services/bcrypt.service';
-import { ROLE } from 'src/users-admin/shared/enums/role.enum';
 import { UserAdminRepository } from '../../../../users-admin/shared/repositories/user-admin.repository';
 
 @Injectable()
