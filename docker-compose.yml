@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  db:
+    container_name: db-university
+    image: mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: db-university
+      MYSQL_ROOT_PASSWORD: mlkgsnghlsgehioneiogkjhn
+      MYSQL_PASSWORD: jdfgisklwhjgewsgeiowklsj
+      MYSQL_USER: user
+
+  phpmyadmin:
+    container_name: phpmyadmin-db-university
+    image: phpmyadmin
+    ports:
+      - 8081:80
+    volumes:
+      - ./phpmyadmin-data:/var/lib/phpmyadmin
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: mlkgsnghlsgehioneiogkjhn
+
+volumes:
+  mysql-data:
+    driver: local
