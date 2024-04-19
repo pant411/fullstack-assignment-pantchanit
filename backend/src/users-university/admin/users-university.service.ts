@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUsersUniversityDto } from './dto/create-users-university.dto';
 import { UpdateUsersUniversityDto } from './dto/update-users-university.dto';
 import { UsersUniversityRepository } from '../shared/repositories/users-university.repository';
@@ -7,16 +7,30 @@ import { PaginationUserUniversityService } from '../shared/paginations/services/
 import { PaginationUserUniversityFilterDto } from '../shared/paginations/dtos/pagination.dto';
 import { Like } from 'typeorm';
 import { PaginationResponse } from 'src/shared/responses/pagination.response';
+import BcryptService from 'src/auth/shared/services/bcrypt.service';
 
 @Injectable()
 export class UsersUniversityService {
   constructor(
     private readonly usersUniversityRepository: UsersUniversityRepository,
-    private readonly paginationUserUniversityService: PaginationUserUniversityService
+    private readonly paginationUserUniversityService: PaginationUserUniversityService,
+    private readonly bcryptService: BcryptService,
   ) { }
 
   async create(createUsersUniversityDto: CreateUsersUniversityDto): Promise<UsersUniversity> {
-    const newUsersUniversity = this.usersUniversityRepository.create(createUsersUniversityDto);
+    const existUser = await this.usersUniversityRepository.findOneByEmail(
+      createUsersUniversityDto.email,
+    );
+    if (existUser) {
+      throw new ConflictException('User exists.');
+    }
+    const hashPassword = await this.bcryptService.generateHash(
+      createUsersUniversityDto.password,
+    );
+    const newUsersUniversity = this.usersUniversityRepository.create({ 
+      ...createUsersUniversityDto, 
+      password: hashPassword 
+    });
     await this.usersUniversityRepository.save(newUsersUniversity);
     return newUsersUniversity;
   }

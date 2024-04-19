@@ -6,16 +6,17 @@ import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { ResponseModel } from 'src/shared/responses/resposne.interface';
 import { UsersUniversity } from '../shared/entities/users-university.entity';
 import { PaginationUserUniversityFilterDto } from '../shared/paginations/dtos/pagination.dto';
+import { PaginationResponse } from 'src/shared/responses/pagination.response';
 
 @Controller('api/v1/admin/users-university')
 @ApiTags('User University')
 @ApiBearerAuth()
 export class UsersUniversityController {
-  constructor(private readonly usersUniversityService: UsersUniversityService) {}
+  constructor(private readonly usersUniversityService: UsersUniversityService) { }
 
   @Post()
-  async create(@Body() createUsersUniversityDto: CreateUsersUniversityDto): 
-    Promise<ResponseModel<UsersUniversity>>  {
+  async create(@Body() createUsersUniversityDto: CreateUsersUniversityDto):
+    Promise<ResponseModel<UsersUniversity>> {
     const data = await this.usersUniversityService.create(createUsersUniversityDto);
     return {
       data,
@@ -25,23 +26,48 @@ export class UsersUniversityController {
   }
 
   @Get()
-  @ApiQuery({ type: PaginationUserUniversityFilterDto})
-  findAll(@Query() filter: PaginationUserUniversityFilterDto) {
-    return this.usersUniversityService.findAll(filter);
+  @ApiQuery({ type: PaginationUserUniversityFilterDto })
+  async findAll(@Query() filter: PaginationUserUniversityFilterDto):
+    Promise<ResponseModel<PaginationResponse<UsersUniversity>>> {
+    const data = await this.usersUniversityService.findAll(filter);
+    return {
+      data,
+      message: data.items.length > 0 ?
+        'Found List user of university successfully' :
+        'Not Found List user of university successfully',
+      statusCode: HttpStatus.OK,
+    };
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersUniversityService.findOne(+id);
+  async findOne(@Param('id') id: string): Promise<ResponseModel<UsersUniversity>> {
+    const data = await this.usersUniversityService.findOne(+id);
+    return {
+      data,
+      message: 'Found',
+      statusCode: HttpStatus.OK,
+    };
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUsersUniversityDto: UpdateUsersUniversityDto) {
-    return this.usersUniversityService.update(+id, updateUsersUniversityDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateUsersUniversityDto: UpdateUsersUniversityDto):
+    Promise<ResponseModel<UsersUniversity>> {
+    const data = await this.usersUniversityService.update(+id, updateUsersUniversityDto);
+    return {
+      data,
+      message: 'Update user of university successfully',
+      statusCode: HttpStatus.CREATED,
+    };
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersUniversityService.remove(+id);
+  async remove(@Param('id') id: string):Promise<ResponseModel> {
+    await this.usersUniversityService.remove(+id);
+    return {
+      message: 'Delete user of university successfully',
+      statusCode: HttpStatus.OK,
+    }
   }
 }

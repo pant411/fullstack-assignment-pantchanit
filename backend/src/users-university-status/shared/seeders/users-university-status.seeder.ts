@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UsersUniversityStatusRepository } from '../repositries/users-university-status.repository';
-import { USERS_UNIVERSITY_STATUS } from '../enums/users-university-status.enum';
+import { USERS_UNIVERSITY_STATUS, USERS_UNIVERSITY_STATUS_ID } from '../enums/users-university-status.enum';
 
 @Injectable()
 export class UsersUniversityStatusSeederService {
@@ -11,23 +11,23 @@ export class UsersUniversityStatusSeederService {
   async seedStatus() {
     const initialUser = this.usersUniversityStatusRepository.create([
       {
-        id: 1,
+        id: USERS_UNIVERSITY_STATUS_ID.ACTIVE,
         name: USERS_UNIVERSITY_STATUS.ACTIVE,
       },
       {
-        id: 2,
+        id: USERS_UNIVERSITY_STATUS_ID.INACTIVE,
         name: USERS_UNIVERSITY_STATUS.INACTIVE,
       },
       {
-        id: 3,
+        id: USERS_UNIVERSITY_STATUS_ID.SUSPENDED,
         name: USERS_UNIVERSITY_STATUS.SUSPENDED,
       },
       {
-        id: 4,
+        id: USERS_UNIVERSITY_STATUS_ID.LOCKED,
         name: USERS_UNIVERSITY_STATUS.LOCKED,
       },
       {
-        id: 5,
+        id: USERS_UNIVERSITY_STATUS_ID.BANNED,
         name: USERS_UNIVERSITY_STATUS.BANNED,
       },
     ]);

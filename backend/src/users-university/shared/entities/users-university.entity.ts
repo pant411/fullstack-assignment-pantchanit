@@ -23,10 +23,10 @@ export class UsersUniversity {
   @Column()
   lastname: string;
 
-  @Column({ name: 'email' })
+  @Column()
   email: string;
 
-  @Column({ nullable: true })
+  @Column()
   @Exclude()
   password: string;
 

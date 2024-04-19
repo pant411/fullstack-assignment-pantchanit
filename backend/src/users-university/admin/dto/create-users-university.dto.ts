@@ -25,7 +25,12 @@ export class CreateUsersUniversityDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsEmail()
-  email: string;    
+  email: string;   
+  
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  password: string;  
 
   @ApiProperty()
   @IsNotEmpty()

@@ -1,3 +1,7 @@
 # docker compose
 /mysql-data
 /phpmyadmin-data
+
+# misc
+.DS_Store
+*.pem

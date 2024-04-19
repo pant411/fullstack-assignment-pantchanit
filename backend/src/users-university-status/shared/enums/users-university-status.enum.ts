@@ -6,3 +6,11 @@ export enum USERS_UNIVERSITY_STATUS {
   LOCKED = 'Locked',
   BANNED = 'Banned',
 }
+
+export enum USERS_UNIVERSITY_STATUS_ID {
+  ACTIVE = 1,
+  INACTIVE = 2,
+  SUSPENDED = 3,
+  LOCKED = 4,
+  BANNED = 5,
+}
