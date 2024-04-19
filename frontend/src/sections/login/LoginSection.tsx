@@ -37,7 +37,7 @@ const LoginSection = () => {
   };
 
   return (
-    <div className="w-full p-6 m-auto bg-white rounded-md shadow-md ring-2 ring-gray-800/50 lg:max-w-lg">
+    <div className="w-[35%] p-6 bg-white rounded-md shadow-md ring-2 ring-gray-800/50 max-md:w-[80%]">
       <h1 className="text-3xl font-semibold text-center text-gray-700">เข้าสู่ระบบ</h1>
       <FormProvider {...methods}>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>

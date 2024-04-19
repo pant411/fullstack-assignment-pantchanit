@@ -60,7 +60,7 @@ const RegisterSection = () => {
   };
 
   return (
-    <div className="w-full p-6 m-auto bg-white rounded-md shadow-md ring-2 ring-gray-800/50">
+    <div className="w-[60%] p-6 m-auto bg-white rounded-md shadow-md ring-2 ring-gray-800/50 max-md:w-[100%]">
       <h1 className="text-3xl font-semibold text-center text-gray-700">สมัครเป็นผู้ดูแลระบบ</h1>
       <FormProvider {...methods}>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>

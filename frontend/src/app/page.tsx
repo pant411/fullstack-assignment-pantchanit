@@ -2,8 +2,8 @@ import LoginForm from "@/sections/login/LoginSection";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <div className="flex flex-col items-center justify-between pt-24">
       <LoginForm />
-    </main>
+    </div>
   );
 }
