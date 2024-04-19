@@ -26,7 +26,6 @@ export class UsersUniversityController {
   }
 
   @Get()
-  @ApiQuery({ type: PaginationUserUniversityFilterDto })
   async findAll(@Query() filter: PaginationUserUniversityFilterDto):
     Promise<ResponseModel<PaginationResponse<UsersUniversity>>> {
     const data = await this.usersUniversityService.findAll(filter);

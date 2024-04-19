@@ -1,6 +1,7 @@
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -71,7 +72,7 @@ export class UsersUniversity {
   @Column({ name: 'status_id' })
   statusId: number;
   @ManyToOne(() => UsersUniversityStatus, (usersUniversityStatus) => usersUniversityStatus.usersUniversities)
-  @JoinColumn({name: 'statusId'})
+  @JoinColumn({name: 'status_id'})
   usersUniversityStatus: UsersUniversityStatus;
 
   @CreateDateColumn({ name: 'created_at' })
@@ -79,6 +80,9 @@ export class UsersUniversity {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt?: Date;
 
   constructor(partial: Partial<UsersUniversity>) {
     Object.assign(this, partial);
