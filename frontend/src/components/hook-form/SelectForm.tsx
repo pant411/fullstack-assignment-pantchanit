@@ -27,7 +27,7 @@ const SelectForm = ({
           </select>
         )}
       />
-      {errors && <p className="text-red-500">{errors.root?.message}</p>}
+      {errors[name]?.message && <p className="text-red-500">{errors[name]?.message as string}</p>}
     </div>
   );
 };

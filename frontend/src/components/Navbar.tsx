@@ -28,10 +28,10 @@ const Navbar = () => {
         </div>
       </div> */}
       <div className="mr-2">
-        <a className="btn bg-[#83b683]">สมัครสมาชิก</a>
+        <a className="btn bg-[#83b683]" href="/register">สมัครสมาชิก</a>
       </div>
       <div >
-        <a className="btn bg-[#ffe297]">เข้าสู่ระบบ</a>
+        <a className="btn bg-[#ffe297]" href="/">เข้าสู่ระบบ</a>
       </div>
     </div>
   )

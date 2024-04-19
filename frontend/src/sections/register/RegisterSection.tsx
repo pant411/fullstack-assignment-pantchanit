@@ -1,6 +1,8 @@
 'use client'
 
 import { FormProvider, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
 import TextField from "../../components/hook-form/InputForm"
 import { GENDER } from "@/utils/enums/gender.enum";
 import DatepickerForm from "@/components/hook-form/DatepickerForm";
@@ -16,13 +18,35 @@ interface RegisterModel {
   phoneNumber: string;
 }
 
+const RegisterSchema = yup
+  .object({
+    firstname: yup.string().required('กรุณากรอกชื่อจริง'),
+    lastname: yup.string().required('กรุณากรอกนามสกุล'),
+    email: yup.string().email().required('กรุณากรอกนามสกุล'),
+    password: yup.string()
+    .min(8, 'รหัสผ่านควรมีความยาวอย่างน้อย 8 อักขระ')
+    .matches(/[a-zA-Z0-9]/, 'รหัสผ่านต้องประกอบด้วยอักขระภาษาอังกฤษและตัวเลข')
+    .required('กรุณากรอกรหัสผ่าน'),
+    DOB: yup.date().required('กรุณากรอกวันเกิด'),
+    gender: yup.string().oneOf([
+      GENDER.NOT_SPECIFIED,
+      GENDER.MALE,GENDER.
+      FEMALE
+    ]).required('กรุณาระบุเพศ'),
+    phoneNumber: yup.string().required('กรุณากรอกเบอร์โทรศัพท์'),
+  })
+  .required();
+
 const RegisterSection = () => {
   const methods = useForm<RegisterModel>({
+    resolver: yupResolver(RegisterSchema),
     defaultValues: {
       firstname: '',
       lastname: '',
       email: '',
       password: '',
+      gender: GENDER.NOT_SPECIFIED,
+      DOB: new Date(),
     },
     mode: "onSubmit",
   });

@@ -5,6 +5,8 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  Matches,
+  MinLength,
 } from 'class-validator';
 import { GENDER } from '../shared/enums/gender.enum';
 
@@ -19,11 +21,23 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsEmail()
-  email: string;  
+  email: string;
 
   @IsNotEmpty()
+  @MinLength(
+    8, 
+    { 
+      message: 'Password is too short - should be 8 chars minimum.' 
+    }
+  )
+  @Matches(
+    /[a-zA-Z0-9]/, 
+    { 
+      message: 'Password can only contain Latin letters and number.' 
+    }
+  )
   @IsString()
-  password: string;  
+  password: string;
 
   @IsNotEmpty()
   @IsDateString()
@@ -31,7 +45,7 @@ export class CreateUserDto {
 
   @IsOptional()
   @IsIn([GENDER.FEMALE, GENDER.MALE, GENDER.NOT_SPECIFIED])
-  gender: GENDER;  
+  gender: GENDER;
 
   @IsNotEmpty()
   @IsString()

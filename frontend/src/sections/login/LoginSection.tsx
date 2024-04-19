@@ -1,6 +1,8 @@
 'use client'
 
 import { FormProvider, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
 import TextField from "../../components/hook-form/InputForm"
 
 interface LoginModel {
@@ -8,9 +10,17 @@ interface LoginModel {
   password: string;
 }
 
+const LoginSchema = yup
+  .object({
+    email: yup.string().email().required('กรุณากรอกอีเมล์'),
+    password: yup.string().required('กรุณากรอกรหัสผ่าน'),
+  })
+  .required();
+
 const LoginSection = () => {
 
   const methods = useForm<LoginModel>({
+    resolver: yupResolver(LoginSchema),
     defaultValues: {
       email: '',
       password: '',
