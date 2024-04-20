@@ -17,7 +17,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className="navbar bg-[#EEEEEE]">
+    <div className="navbar bg-[#EEEEEE] px-10">
       <div className="flex-1">
         <a className="btn btn-ghost text-xl">User Management</a>
       </div>
