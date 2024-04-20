@@ -7,13 +7,15 @@ import TextField from "../../components/hook-form/InputForm"
 import { GENDER } from "@/utils/enums/gender.enum";
 import DatepickerForm from "@/components/hook-form/DatepickerForm";
 import SelectForm from "@/components/hook-form/SelectForm";
+import { register } from "@/services/auth/auth.service";
+import { redirect } from "next/navigation";
 
 interface RegisterModel {
   firstname: string;
   lastname: string;
   email: string;
   password: string;
-  DOB: Date; // dateOfBirth 
+  DOB: string; // dateOfBirth 
   gender: GENDER;
   phoneNumber: string;
 }
@@ -27,7 +29,7 @@ const RegisterSchema = yup
     .min(8, 'รหัสผ่านควรมีความยาวอย่างน้อย 8 อักขระ')
     .matches(/[a-zA-Z0-9]/, 'รหัสผ่านต้องประกอบด้วยอักขระภาษาอังกฤษและตัวเลข')
     .required('กรุณากรอกรหัสผ่าน'),
-    DOB: yup.date().required('กรุณากรอกวันเกิด'),
+    DOB: yup.string().required('กรุณากรอกวันเกิด'),
     gender: yup.string().oneOf([
       GENDER.NOT_SPECIFIED,
       GENDER.MALE,GENDER.
@@ -46,7 +48,7 @@ const RegisterSection = () => {
       email: '',
       password: '',
       gender: GENDER.NOT_SPECIFIED,
-      DOB: new Date(),
+      DOB: '',
     },
     mode: "onSubmit",
   });
@@ -55,8 +57,10 @@ const RegisterSection = () => {
     handleSubmit,
   } = methods;
 
-  const onSubmit = (data: RegisterModel) => {
-    console.log(data);
+  const onSubmit = async (data: RegisterModel) => {
+    // console.log(data);
+    await register(data);
+    redirect('/');
   };
 
   return (

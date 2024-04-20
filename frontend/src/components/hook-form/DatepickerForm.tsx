@@ -1,8 +1,8 @@
 'use client'
 
-import { HTMLInputTypeAttribute } from 'react';
+import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import Datepicker from "react-tailwindcss-datepicker";
+import Datepicker, { DateValueType } from "react-tailwindcss-datepicker";
 
 interface InputProps {
   name: string;
@@ -15,6 +15,7 @@ const DatepickerForm = ({
   rules,
   placeholder,
 }: InputProps) => {
+  const [valueDate, setValueDate] = useState<DateValueType>({ startDate: null, endDate: null });
   const { control, formState: { errors } } = useFormContext();
   return (
     <div className="space-y-2">
@@ -22,14 +23,21 @@ const DatepickerForm = ({
         name={name}
         control={control}
         rules={rules}
-        render={({ field }) => (
-          <Datepicker
-            inputClassName={`w-full input input-bordered`}
-            asSingle={true}
-            placeholder={placeholder}
-            {...field}
-          />
-        )}
+        render={({ field }) => {
+          const { onChange, value, ...others } = field;
+          return (
+            <Datepicker
+              inputClassName={`w-full input input-bordered`}
+              asSingle={true}
+              placeholder={placeholder}
+              useRange={false}
+              maxDate={new Date()}
+              onChange={(e) => { onChange(e?.startDate || '', e); setValueDate(e || { startDate: null, endDate: null }); }}
+              value={valueDate || { startDate: null, endDate: null }}
+              {...others}
+            />
+          )
+        }}
       />
       {errors[name]?.message && <p className="text-red-500">{errors[name]?.message as string}</p>}
     </div>

@@ -1,9 +1,20 @@
 'use client'
 
+import { useEffect, useState } from "react";
 import Pagination from "@/components/pagination/Pagination";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/stores/auth/hooks/auth.hook";
 
 export default function Dashboard() {
+  const { replace } = useRouter();
+  const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      replace('/');
+    }
+  }, [isAuthenticated, replace]);
+
   const [currentPage, setCurrentPage] = useState(1);
 
   return (

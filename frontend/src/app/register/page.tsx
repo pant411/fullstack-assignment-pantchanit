@@ -1,8 +1,20 @@
 'use client'
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import RegisterSection from "@/sections/register/RegisterSection"
+import { useAuth } from "@/stores/auth/hooks/auth.hook"
 
 const Register = () => {
+  const { replace } = useRouter();
+  const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      replace('/dashboard');
+    }
+  }, [isAuthenticated, replace]);
+
   return (
     <main className="flex flex-col items-center justify-between p-24">
       <RegisterSection />

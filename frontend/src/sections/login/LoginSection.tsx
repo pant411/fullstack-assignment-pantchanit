@@ -4,6 +4,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import TextField from "../../components/hook-form/InputForm"
+import { useAuth } from "@/stores/auth/hooks/auth.hook";
 
 interface LoginModel {
   email: string;
@@ -18,6 +19,7 @@ const LoginSchema = yup
   .required();
 
 const LoginSection = () => {
+  const { login } = useAuth();
 
   const methods = useForm<LoginModel>({
     resolver: yupResolver(LoginSchema),
@@ -32,8 +34,8 @@ const LoginSection = () => {
     handleSubmit,
   } = methods;
 
-  const onSubmit = (data: LoginModel) => {
-    console.log(data);
+  const onSubmit = async (data: LoginModel) => {
+    await login(data.email, data.password);
   };
 
   return (
