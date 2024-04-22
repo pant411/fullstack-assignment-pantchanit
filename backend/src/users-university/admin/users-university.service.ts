@@ -8,6 +8,7 @@ import { PaginationUserUniversityFilterDto } from '../shared/paginations/dtos/pa
 import { Like } from 'typeorm';
 import { PaginationResponse } from 'src/shared/responses/pagination.response';
 import BcryptService from 'src/auth/shared/services/bcrypt.service';
+import e from 'express';
 
 @Injectable()
 export class UsersUniversityService {
@@ -45,6 +46,7 @@ export class UsersUniversityService {
       this.usersUniversityRepository,
       filter,
       where,
+      ['usersUniversityStatus']
     );
   }
 

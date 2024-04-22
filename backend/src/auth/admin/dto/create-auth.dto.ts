@@ -23,22 +23,22 @@ export class RegisterDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsEmail()
-  email: string;  
+  email: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  password: string;  
+  password: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsDateString()
   DOB: Date; // dateOfBirth 
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ enum: GENDER })
   @IsOptional()
   @IsIn([GENDER.FEMALE, GENDER.MALE, GENDER.NOT_SPECIFIED])
-  gender: GENDER;  
+  gender: GENDER;
 
   @ApiProperty()
   @IsNotEmpty()

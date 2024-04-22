@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus, Query, ClassSerializerInterceptor, UseInterceptors } from '@nestjs/common';
 import { UsersUniversityService } from './users-university.service';
 import { CreateUsersUniversityDto } from './dto/create-users-university.dto';
 import { UpdateUsersUniversityDto } from './dto/update-users-university.dto';
@@ -8,6 +8,7 @@ import { UsersUniversity } from '../shared/entities/users-university.entity';
 import { PaginationUserUniversityFilterDto } from '../shared/paginations/dtos/pagination.dto';
 import { PaginationResponse } from 'src/shared/responses/pagination.response';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('api/v1/admin/users-university')
 @ApiTags('User University')
 @ApiBearerAuth()
@@ -62,7 +63,7 @@ export class UsersUniversityController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string):Promise<ResponseModel> {
+  async remove(@Param('id') id: string): Promise<ResponseModel> {
     await this.usersUniversityService.remove(+id);
     return {
       message: 'Delete user of university successfully',

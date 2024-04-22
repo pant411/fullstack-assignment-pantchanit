@@ -6,7 +6,6 @@ import { isAuthenticated, login, logout } from "@/services/auth/auth.service";
 import useSWR from "swr";
 import { fetcher } from "@/libs/axios/fetcher";
 import { User } from "@/utils/interface/user.interface";
-import axiosInstance from "@/libs/axios/base";
 
 export const AuthProvider = ({ children }: {
   children: React.ReactNode;

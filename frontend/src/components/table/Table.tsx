@@ -10,7 +10,7 @@ interface DataTableType<T> {
   columnDatas: string[];
 }
 
-const Table = <T = any>({ headers, data, columnDatas }: DataTableType<T>) => {
+const TableDashboard = <T = any>({ headers, data, columnDatas }: DataTableType<T>) => {
   return (
     <div className="overflow-x-auto">
       <table className="table">
@@ -46,4 +46,4 @@ const Table = <T = any>({ headers, data, columnDatas }: DataTableType<T>) => {
   )
 }
 
-export default Table
+export default TableDashboard

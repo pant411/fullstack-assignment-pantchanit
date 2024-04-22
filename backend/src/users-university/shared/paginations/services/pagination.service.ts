@@ -23,12 +23,14 @@ export class PaginationUserUniversityService {
     repository: Repository<T>,
     filter: PaginationUserUniversityFilterDto,
     where: FindOptionsWhere<T>,
+    relations?: string[],
   ): Promise<PaginationResponse<T>> {
     const [items, count] = await repository.findAndCount({
       order: this.createOrderQuery(filter),
       skip: (filter.page - 1) * filter.pageSize,
       take: filter.pageSize,
       where: where,
+      relations,
     });
     const totalPage = Math.ceil(count / filter.pageSize);
     const response: PaginationResponse<T> = {
