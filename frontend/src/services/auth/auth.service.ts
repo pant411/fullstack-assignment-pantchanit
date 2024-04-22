@@ -1,7 +1,7 @@
+import { TOKEN_COOKIE_NAME } from '@/configs/config';
 import axiosInstance from '@/libs/axios/base';
+import { ProfileModel } from '@/utils/interface/user.interface';
 import Cookies from 'js-cookie';
-
-const TOKEN_COOKIE_NAME = 'tokenAdmin';
 
 export const register = async (payload: any) => {
   try {
@@ -38,11 +38,31 @@ export const isAuthenticated = () => {
 
 export const getProfile = async () => {
   try {
-    const token = Cookies.get(TOKEN_COOKIE_NAME);
-    if (!token) throw new Error('Token not found');
     const response = await axiosInstance.get(`admin/users/me`);
     return response.data;
   } catch (error) {
     throw error;
   }
 };
+
+export const editProfile = async (id: number, payload: ProfileModel) => {
+  try {
+    const response = await axiosInstance.patch(`admin/users/${id}`, payload);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const changePassword = async (oldPassword: string, newPassword: string) => {
+  try {
+    const response = await axiosInstance.patch('admin/users/reset-password', {
+      oldPassword,
+      newPassword,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+

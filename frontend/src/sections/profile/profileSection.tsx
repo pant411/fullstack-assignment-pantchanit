@@ -1,6 +1,6 @@
 'use client'
 
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
@@ -8,47 +8,36 @@ import TextField from "../../components/hook-form/InputForm"
 import { GENDER } from "@/utils/enums/gender.enum";
 import DatepickerForm from "@/components/hook-form/DatepickerForm";
 import SelectForm from "@/components/hook-form/SelectForm";
-import { register } from "@/services/auth/auth.service";
+import { editProfile } from "@/services/auth/auth.service";
+import { ProfileModel } from "@/utils/interface/user.interface";
 
-interface RegisterModel {
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-  DOB: string; // dateOfBirth 
-  gender: GENDER;
-  phoneNumber: string;
-}
-
-const RegisterSchema = yup
+const ProfileSchema = yup
   .object({
     firstname: yup.string().required('กรุณากรอกชื่อจริง'),
     lastname: yup.string().required('กรุณากรอกนามสกุล'),
     email: yup.string().email().required('กรุณากรอกนามสกุล'),
-    password: yup.string()
-    .min(8, 'รหัสผ่านควรมีความยาวอย่างน้อย 8 อักขระ')
-    .matches(/[a-zA-Z0-9]/, 'รหัสผ่านต้องประกอบด้วยอักขระภาษาอังกฤษและตัวเลข')
-    .required('กรุณากรอกรหัสผ่าน'),
     DOB: yup.string().required('กรุณากรอกวันเกิด'),
     gender: yup.string().oneOf([
       GENDER.NOT_SPECIFIED,
-      GENDER.MALE,GENDER.
-      FEMALE
+      GENDER.MALE, GENDER.
+        FEMALE
     ]).required('กรุณาระบุเพศ'),
     phoneNumber: yup.string().required('กรุณากรอกเบอร์โทรศัพท์'),
   })
   .required();
 
-const RegisterSection = () => {
-  const methods = useForm<RegisterModel>({
-    resolver: yupResolver(RegisterSchema),
+const ProfileSection = ({ profile }: { profile?: ProfileModel }) => {
+  const { push } = useRouter();
+
+  const methods = useForm<ProfileModel>({
+    resolver: yupResolver(ProfileSchema),
     defaultValues: {
-      firstname: '',
-      lastname: '',
-      email: '',
-      password: '',
-      gender: GENDER.NOT_SPECIFIED,
-      DOB: '',
+      firstname: profile?.firstname || '',
+      lastname: profile?.lastname || '',
+      email: profile?.email || '',
+      gender: profile?.gender || GENDER.NOT_SPECIFIED,
+      DOB: profile?.DOB.toString() || '',
+      phoneNumber: profile?.phoneNumber || '',
     },
     mode: "onSubmit",
   });
@@ -57,15 +46,17 @@ const RegisterSection = () => {
     handleSubmit,
   } = methods;
 
-  const onSubmit = async (data: RegisterModel) => {
+  const onSubmit = async (data: ProfileModel) => {
     // console.log(data);
-    await register(data);
-    redirect('/');
+    if (profile?.id) {
+      await editProfile(profile.id, data);
+      push('/dashboard');
+    }
   };
 
   return (
     <div className="w-[60%] p-6 m-auto bg-white rounded-md shadow-md ring-2 ring-gray-800/50 max-md:w-[100%]">
-      <h1 className="text-3xl font-semibold text-center text-gray-700">สมัครเป็นผู้ดูแลระบบ</h1>
+      <h1 className="text-3xl font-semibold text-center text-gray-700">โปรไฟล์</h1>
       <FormProvider {...methods}>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-row gap-2 max-md:flex-col">
@@ -89,12 +80,6 @@ const RegisterSection = () => {
                 <span className="text-base label-text">อีเมล์</span>
               </label>
               <TextField name="email" type="email" placeholder="อีเมล์" />
-            </div>
-            <div className="w-full">
-              <label className="label">
-                <span className="text-base label-text">รหัสผ่าน</span>
-              </label>
-              <TextField name="password" type="password" placeholder="รหัสผ่าน" />
             </div>
           </div>
 
@@ -133,7 +118,7 @@ const RegisterSection = () => {
           </div>
 
           <div>
-            <button className="btn btn-block btn-info">สมัครสมาชิก</button>
+            <button className="btn btn-block btn-info">แก้ไขโปรไฟล์</button>
           </div>
         </form>
       </FormProvider>
@@ -141,4 +126,4 @@ const RegisterSection = () => {
   )
 }
 
-export default RegisterSection
+export default ProfileSection

@@ -21,6 +21,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 @ApiBearerAuth()
 export class UserAdminController {
   constructor(private readonly userService: UserAdminService) { }
+  
 
   @Get('me')
   async getProfile(@Request() req: any): Promise<ResponseModel> {

@@ -1,10 +1,9 @@
 'use client'
 
-import { useAuth } from "@/stores/auth/hooks/auth.hook";
 import { useEffect, useState } from "react";
+import { useAuth } from "@/stores/auth/hooks/auth.hook";
 
 const Navbar = () => {
-
   const { isAuthenticated, user, logout, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(true);
 
@@ -17,9 +16,9 @@ const Navbar = () => {
   }
 
   return (
-    <div className="navbar bg-[#EEEEEE] px-10">
+    <div className="navbar bg-[#EEEEEE] px-8">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">User Management</a>
+        <a className="btn btn-ghost text-xl text-primary" href={isAuthenticated? '/dashboard' : '/'}>User Management</a>
       </div>
       {isAuthenticated ? (
         <div className="flex-none gap-2">
@@ -31,12 +30,16 @@ const Navbar = () => {
             </div>
             <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
               <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
+                <a className="justify-between" href="/profile">
+                  โปรไฟล์
                 </a>
               </li>
-              <li><a onClick={() => logout()}>Logout</a></li>
+              <li>
+                <a className="justify-between" href="/profile/forgot-password">
+                  เปลี่ยนรหัสผ่าน
+                </a>
+              </li>
+              <li><a onClick={() => logout()}>ออกจากระบบ</a></li>
             </ul>
           </div>
         </div>

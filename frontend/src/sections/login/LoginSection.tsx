@@ -55,9 +55,8 @@ const LoginSection = () => {
             </label>
             <TextField name="password" type="password" placeholder="Enter Password" />
           </div>
-          <a href="#" className="text-xs text-gray-600 hover:underline hover:text-blue-600">ลืมรหัสผ่าน?</a>
           <div>
-            <button className="btn btn-block btn-info">Login</button>
+            <button className="btn btn-block btn-info">เข้าสู่ระบบ</button>
           </div>
         </form>
       </FormProvider>
