@@ -133,7 +133,7 @@ const RegisterSection = () => {
           </div>
 
           <div>
-            <button className="btn btn-block">สมัครสมาชิก</button>
+            <button className="btn btn-block btn-info">สมัครสมาชิก</button>
           </div>
         </form>
       </FormProvider>

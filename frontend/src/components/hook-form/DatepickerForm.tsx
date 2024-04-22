@@ -15,8 +15,12 @@ const DatepickerForm = ({
   rules,
   placeholder,
 }: InputProps) => {
-  const [valueDate, setValueDate] = useState<DateValueType>({ startDate: null, endDate: null });
-  const { control, formState: { errors } } = useFormContext();
+  const { control, formState: { errors }, watch } = useFormContext();
+  const value = watch();
+  const [valueDate, setValueDate] = useState<DateValueType>({ 
+    startDate: value?.DOB, 
+    endDate: value?.DOB 
+  });
   return (
     <div className="space-y-2">
       <Controller
@@ -33,7 +37,7 @@ const DatepickerForm = ({
               useRange={false}
               maxDate={new Date()}
               onChange={(e) => { onChange(e?.startDate || '', e); setValueDate(e || { startDate: null, endDate: null }); }}
-              value={valueDate || { startDate: null, endDate: null }}
+              value={valueDate}
               {...others}
             />
           )

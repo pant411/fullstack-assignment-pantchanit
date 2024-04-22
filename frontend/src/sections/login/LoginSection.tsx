@@ -57,7 +57,7 @@ const LoginSection = () => {
           </div>
           <a href="#" className="text-xs text-gray-600 hover:underline hover:text-blue-600">ลืมรหัสผ่าน?</a>
           <div>
-            <button className="btn btn-block">Login</button>
+            <button className="btn btn-block btn-info">Login</button>
           </div>
         </form>
       </FormProvider>
