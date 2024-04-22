@@ -1,37 +1,19 @@
 'use client'
 
 import { FormProvider, useForm } from "react-hook-form";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import TextField from "../../components/hook-form/InputForm"
 import { GENDER } from "@/utils/enums/gender.enum";
 import DatepickerForm from "@/components/hook-form/DatepickerForm";
 import SelectForm from "@/components/hook-form/SelectForm";
-import { register } from "@/services/auth/auth.service";
 import { ROLE_USER_UNIVERSITY } from "@/utils/interface/user-university/enums/role-user-university.enum";
 import useSWR from "swr";
 import { UsersUniversityStatus } from "@/utils/interface/user-university-status/user-university-status.interface";
 import { fetcher } from "@/libs/axios/fetcher";
-
-
-interface CreateUserUniversityModel {
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-  DOB: string; // dateOfBirth 
-  gender: GENDER;
-  phoneNumber: string
-  address?: string;
-  subDistrict: string;
-  city: string;
-  province: string;
-  country: string;
-  zipCode: string;
-  role: ROLE_USER_UNIVERSITY;
-  statusId: number;
-}
+import { createUser } from "@/services/dashboard/dashboard.service";
+import { CreateUserUniversityModel } from "@/utils/interface/user-university/user-university.interface";
 
 const CreateUserUniversitySchema = yup
   .object({
@@ -64,7 +46,9 @@ const CreateUserUniversitySchema = yup
   .required();
 
 const CreateUserUniversitySection = () => {
-  const { data: dataStatus, isLoading } = useSWR<UsersUniversityStatus[]>(
+  const { push } = useRouter();
+  
+  const { data: dataStatus } = useSWR<UsersUniversityStatus[]>(
     'users-university-status',
     fetcher
   );
@@ -91,10 +75,9 @@ const CreateUserUniversitySection = () => {
     mode: "onSubmit",
   });
 
-  const onSubmit = (data: CreateUserUniversityModel) => {
-    console.log(data);
-    // await register(data);
-    // redirect('/');
+  const onSubmit = async (data: CreateUserUniversityModel) => {
+    await createUser(data);
+    push('/dashboard');
   };
 
   const {
@@ -153,7 +136,7 @@ const CreateUserUniversitySection = () => {
                 name="statusId"
                 renderOptions={
                   (dataStatus || [])
-                  .map((ele) => <option key={ele.id} value={ele.id}>{ele.name}</option>)
+                    .map((ele) => <option key={ele.id} value={ele.id}>{ele.name}</option>)
                 }
               />
             </div>

@@ -12,6 +12,7 @@ import { UsersUniversity } from "@/utils/interface/user-university/user-universi
 import { GENDER } from "@/utils/enums/gender.enum";
 import Tab from "@/components/tab/Tab";
 import { ROLE_USER_UNIVERSITY } from "@/utils/interface/user-university/enums/role-user-university.enum";
+import { deleteUser } from "@/services/dashboard/dashboard.service";
 
 const headers = [
   {
@@ -41,13 +42,14 @@ const headers = [
   },
 ];
 
-const pageSize = 10;
+const pageSize = 8;
 
 export default function Dashboard() {
   // tab
   const [currentTab, setTab] = useState<string>('All');
   const { replace } = useRouter();
   const { isAuthenticated } = useAuth();
+  const [selectId, setSelectId] = useState<number | null>(null);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -57,7 +59,11 @@ export default function Dashboard() {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const { data, isLoading } = useSWR<PaginationResponse<UsersUniversity>>(
+  const { 
+    data, 
+    isLoading, 
+    mutate 
+  } = useSWR<PaginationResponse<UsersUniversity>>(
     `admin/users-university?page=${currentPage}&pageSize=${pageSize}&${currentTab !== 'All' ? `role=${currentTab}` : undefined}`,
     fetcher
   );
@@ -68,8 +74,16 @@ export default function Dashboard() {
     return <div>Loading ...</div>
   }
 
+  const handleDeleteUser = async () => {
+    if (selectId) {
+      await deleteUser(selectId);
+      setSelectId(null);
+      mutate();
+    }
+  }
+
   return (
-    <main className="min-h-screen p-12">
+    <main className="min-h-screen p-6">
       <p className="my-4 text-center text-2xl font-bold">รายชื่อสมาชิก</p>
       <div className="flex flex-row justify-center items-center">
         <Tab
@@ -80,7 +94,7 @@ export default function Dashboard() {
           ]}
           currentTab={currentTab}
           handleTab={setTab}
-        />        
+        />
       </div>
 
       {
@@ -105,7 +119,6 @@ export default function Dashboard() {
               {
                 listData.map((ele: UsersUniversity, idx) => (
                   <tr key={idx}>
-
                     <td align={'center'} >{ele.firstname}</td>
                     <td align={'center'} >{ele.lastname}</td>
                     <td align={'center'} >
@@ -113,7 +126,7 @@ export default function Dashboard() {
                     </td>
                     <td align={'center'} >{ele.email}</td>
                     <td align={'center'} >{format(ele.DOB, 'dd-MM-yyyy')}</td>
-                    <td align={'center'} > 
+                    <td align={'center'} >
                       <div className={`badge badge-${ele.gender === GENDER.FEMALE ? 'secondary' : 'info'}`}>
                         {ele.gender}
                       </div>
@@ -121,18 +134,56 @@ export default function Dashboard() {
                     <td align={'center'} >{ele.phoneNumber}</td>
 
                     <td align={'center'} className="flex flex-row justify-center gap-2">
-                      <button className="btn btn-primary" onClick={() => replace(`dashboard/edit/${ele.id}`)}>แก้ไข</button>
-                      <button className="btn btn-active btn-error">ลบ</button>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => replace(`dashboard/edit/${ele.id}`)}
+                      >
+                        แก้ไข
+                      </button>
+                      <label
+                        htmlFor="modal-for-delete-user"
+                        className="btn btn-active btn-error"
+                        onClick={() => setSelectId(ele.id)}
+                      >
+                        ลบ
+                      </label>
                     </td>
                   </tr>
                 ))
               }
             </tbody>
           </table>
-        </div> : <div className="grid h-[65vh] card bg-base-200 rounded-box place-items-center text-4xl">
-          ไม่พบรายชื่อสมาชิก
-        </div>
+        </div> :
+          <div 
+            className="grid h-[65vh] card bg-base-200 rounded-box place-items-center text-4xl mt-4"
+          >
+            ไม่พบรายชื่อสมาชิก
+          </div>
       }
+
+      {/* Put this part before </body> tag */}
+      <input type="checkbox" id="modal-for-delete-user" className="modal-toggle" />
+      <div className="modal" role="dialog">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">คำเตือน</h3>
+          <p className="py-4">คุณต้องการลบสมาชิกนี้ใช่หรือไม่</p>
+          <div className="modal-action">
+            <label 
+              htmlFor="modal-for-delete-user" 
+              className="btn btn-active btn-info" 
+              onClick={handleDeleteUser}
+            >
+              ยืนยัน
+            </label>
+            <label 
+              htmlFor="modal-for-delete-user" 
+              className="btn"
+            >
+              ปิด
+            </label>
+          </div>
+        </div>
+      </div>
 
       <div className="flex flex-row items-center justify-center p-2">
         <Pagination currentPage={currentPage} totalPages={data?.pageMeta?.totalPage || 1} onPageChange={setCurrentPage} />

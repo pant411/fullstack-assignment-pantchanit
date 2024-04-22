@@ -1,37 +1,19 @@
 'use client'
 
 import { FormProvider, useForm } from "react-hook-form";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import TextField from "../../components/hook-form/InputForm"
 import { GENDER } from "@/utils/enums/gender.enum";
 import DatepickerForm from "@/components/hook-form/DatepickerForm";
 import SelectForm from "@/components/hook-form/SelectForm";
-import { register } from "@/services/auth/auth.service";
 import { ROLE_USER_UNIVERSITY } from "@/utils/interface/user-university/enums/role-user-university.enum";
 import useSWR from "swr";
 import { UsersUniversityStatus } from "@/utils/interface/user-university-status/user-university-status.interface";
 import { fetcher } from "@/libs/axios/fetcher";
-import { UsersUniversity } from "@/utils/interface/user-university/user-university.interface";
-
-
-interface EditUserUniversityModel {
-  firstname: string;
-  lastname: string;
-  email: string;
-  DOB: string; // dateOfBirth 
-  gender: GENDER;
-  phoneNumber: string
-  address?: string;
-  subDistrict: string;
-  city: string;
-  province: string;
-  country: string;
-  zipCode: string;
-  role: ROLE_USER_UNIVERSITY;
-  statusId: number;
-}
+import { EditUserUniversityModel, UsersUniversity } from "@/utils/interface/user-university/user-university.interface";
+import { editUser } from "@/services/dashboard/dashboard.service";
 
 const EditUserUniversitySchema = yup
   .object({
@@ -60,6 +42,8 @@ const EditUserUniversitySchema = yup
   .required();
 
 const EditUserUniversitySection = ({ usersUniversity }: { usersUniversity?: UsersUniversity }) => {
+  const { push } = useRouter();
+
   const { data: dataStatus } = useSWR<UsersUniversityStatus[]>(
     'users-university-status',
     fetcher
@@ -86,10 +70,12 @@ const EditUserUniversitySection = ({ usersUniversity }: { usersUniversity?: User
     mode: "onSubmit",
   });
 
-  const onSubmit = (data: EditUserUniversityModel) => {
-    console.log(data);
-    // await register(data);
-    // redirect('/');
+  const onSubmit = async (data: EditUserUniversityModel) => {
+    // console.log(data);
+    if (usersUniversity?.id) {
+      await editUser(usersUniversity?.id, data);
+      push('/dashboard');      
+    }
   };
 
   const { handleSubmit } = methods;

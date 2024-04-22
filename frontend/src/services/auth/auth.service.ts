@@ -40,9 +40,7 @@ export const getProfile = async () => {
   try {
     const token = Cookies.get(TOKEN_COOKIE_NAME);
     if (!token) throw new Error('Token not found');
-    const response = await axiosInstance.get(`admin/users/me`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axiosInstance.get(`admin/users/me`);
     return response.data;
   } catch (error) {
     throw error;
