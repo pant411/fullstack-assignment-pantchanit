@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CONFIG } from "@/configs/config";
+import { CONFIG } from "../../../configs/config";
 
 const axiosInstance = axios.create({
   baseURL: CONFIG.backendUrl,

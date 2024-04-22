@@ -1,13 +1,23 @@
 'use client'
 
+import useSWR from "swr";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { fetcher } from "@/libs/axios/fetcher";
 import ProfileSection from "@/sections/profile/profileSection";
 import { useAuth } from "@/stores/auth/hooks/auth.hook";
 import { ProfileModel } from "@/utils/interface/user.interface";
-import useSWR from "swr";
+
 
 const Profile = () => {
-  const { user } = useAuth();
+  const { replace } = useRouter();
+  const { user, isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      replace('/');
+    }
+  }, [isAuthenticated, replace])
 
   const { data, isLoading } = useSWR<ProfileModel>('admin/users/me', fetcher);
 

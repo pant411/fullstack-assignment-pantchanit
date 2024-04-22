@@ -1,4 +1,4 @@
-import { TOKEN_COOKIE_NAME } from '@/configs/config';
+import { TOKEN_COOKIE_NAME } from '../../../configs/config';
 import axiosInstance from '@/libs/axios/base';
 import { ProfileModel } from '@/utils/interface/user.interface';
 import Cookies from 'js-cookie';
