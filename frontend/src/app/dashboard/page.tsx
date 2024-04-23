@@ -85,6 +85,9 @@ export default function Dashboard() {
   return (
     <main className="min-h-screen p-6">
       <p className="my-4 text-center text-2xl font-bold">รายชื่อสมาชิก</p>
+      <div className="flex flex-row justify-end" onClick={() => replace(`dashboard/create`)}>
+        <button className="btn btn-info" >เพิ่มสมาชิก</button>
+      </div>
       <div className="flex flex-row justify-center items-center">
         <Tab
           data={[
