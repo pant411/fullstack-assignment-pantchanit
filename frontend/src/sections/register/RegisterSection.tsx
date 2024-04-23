@@ -9,8 +9,9 @@ import { GENDER } from "@/utils/enums/gender.enum";
 import DatepickerForm from "@/components/hook-form/DatepickerForm";
 import SelectForm from "@/components/hook-form/SelectForm";
 import { register } from "@/services/auth/auth.service";
-import { enqueueSnackbar } from "notistack";
+import { useSnackbar } from "notistack";
 import { AxiosError } from "axios";
+import { ErrorResponse } from "@/utils/interface/responses/error-response.interface";
 
 interface RegisterModel {
   firstname: string;
@@ -42,6 +43,8 @@ const RegisterSchema = yup
   .required();
 
 const RegisterSection = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const methods = useForm<RegisterModel>({
     resolver: yupResolver(RegisterSchema),
     defaultValues: {
@@ -65,9 +68,8 @@ const RegisterSection = () => {
     await register(data);
     redirect('/');      
     } catch (err) {
-      if (err instanceof AxiosError) {
-        enqueueSnackbar(err.message, { variant: 'error', autoHideDuration: 3000 });
-      }
+      const errorResponse = err as ErrorResponse;
+      enqueueSnackbar(errorResponse.message, { variant: 'error', autoHideDuration: 3000 });
     }
   };
 

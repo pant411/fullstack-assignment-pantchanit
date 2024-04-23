@@ -6,7 +6,7 @@ import * as yup from "yup"
 import TextField from "../../components/hook-form/InputForm"
 import { useAuth } from "@/stores/auth/hooks/auth.hook";
 import { ErrorResponse } from "@/utils/interface/responses/error-response.interface"
-import { enqueueSnackbar } from "notistack";
+import { useSnackbar } from "notistack";
 
 interface LoginModel {
   email: string;
@@ -22,6 +22,8 @@ const LoginSchema = yup
 
 const LoginSection = () => {
   const { login } = useAuth();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const methods = useForm<LoginModel>({
     resolver: yupResolver(LoginSchema),

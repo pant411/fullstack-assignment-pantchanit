@@ -10,8 +10,9 @@ import DatepickerForm from "@/components/hook-form/DatepickerForm";
 import SelectForm from "@/components/hook-form/SelectForm";
 import { editProfile } from "@/services/auth/auth.service";
 import { ProfileModel } from "@/utils/interface/user.interface";
-import { enqueueSnackbar } from "notistack";
+import { useSnackbar } from "notistack";
 import { AxiosError } from "axios";
+import { ErrorResponse } from "@/utils/interface/responses/error-response.interface";
 
 const ProfileSchema = yup
   .object({
@@ -30,6 +31,8 @@ const ProfileSchema = yup
 
 const ProfileSection = ({ profile }: { profile?: ProfileModel }) => {
   const { push } = useRouter();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const methods = useForm<ProfileModel>({
     resolver: yupResolver(ProfileSchema),
@@ -55,9 +58,8 @@ const ProfileSection = ({ profile }: { profile?: ProfileModel }) => {
         await editProfile(profile.id, data);
         push('/dashboard');        
       } catch (err) {
-        if (err instanceof AxiosError) {
-          enqueueSnackbar(err.message, { variant: 'error', autoHideDuration: 3000 });
-        }
+        const errorResponse = err as ErrorResponse;
+        enqueueSnackbar(errorResponse.message, { variant: 'error', autoHideDuration: 3000 });
       }
     }
   };

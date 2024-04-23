@@ -14,8 +14,8 @@ import { UsersUniversityStatus } from "@/utils/interface/user-university-status/
 import { fetcher } from "@/libs/axios/fetcher";
 import { EditUserUniversityModel, UsersUniversity } from "@/utils/interface/user-university/user-university.interface";
 import { editUser } from "@/services/dashboard/dashboard.service";
-import { enqueueSnackbar } from "notistack";
-import { AxiosError } from "axios";
+import { ErrorResponse } from "@/utils/interface/responses/error-response.interface"
+import { useSnackbar } from "notistack";
 
 const EditUserUniversitySchema = yup
   .object({
@@ -45,6 +45,8 @@ const EditUserUniversitySchema = yup
 
 const EditUserUniversitySection = ({ usersUniversity }: { usersUniversity?: UsersUniversity }) => {
   const { push } = useRouter();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const { data: dataStatus } = useSWR<UsersUniversityStatus[]>(
     'users-university-status',
@@ -79,11 +81,8 @@ const EditUserUniversitySection = ({ usersUniversity }: { usersUniversity?: User
         await editUser(usersUniversity?.id, data);
         push('/dashboard');
       } catch (err) {
-        console.log(err);
-        if (err instanceof AxiosError) {
-          
-          enqueueSnackbar(err?.message, { variant: 'error', autoHideDuration: 3000 });
-        }
+        const errorResponse = err as ErrorResponse;
+        enqueueSnackbar(errorResponse.message, { variant: 'error', autoHideDuration: 3000 });
       }
     }
   };
