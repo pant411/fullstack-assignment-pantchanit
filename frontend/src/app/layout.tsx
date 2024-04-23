@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { SnackbarProvider } from 'notistack'
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { AuthProvider } from "@/stores/auth/providers/auth.provider";
+import NotificationProvider from "@/libs/notistack/notistack.provider";
+
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,13 +20,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en" className={inter.className} data-theme="cupcake">
       <body className="min-h-screen">
-        <AuthProvider>
-          <Navbar />
-          {children}          
-        </AuthProvider>
+        <NotificationProvider>
+          <AuthProvider>
+            <Navbar />
+            {children}
+          </AuthProvider>
+        </NotificationProvider>
       </body>
     </html>
   );

@@ -9,6 +9,8 @@ import { GENDER } from "@/utils/enums/gender.enum";
 import DatepickerForm from "@/components/hook-form/DatepickerForm";
 import SelectForm from "@/components/hook-form/SelectForm";
 import { register } from "@/services/auth/auth.service";
+import { enqueueSnackbar } from "notistack";
+import { AxiosError } from "axios";
 
 interface RegisterModel {
   firstname: string;
@@ -59,8 +61,14 @@ const RegisterSection = () => {
 
   const onSubmit = async (data: RegisterModel) => {
     // console.log(data);
+    try {
     await register(data);
-    redirect('/');
+    redirect('/');      
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        enqueueSnackbar(err.message, { variant: 'error', autoHideDuration: 3000 });
+      }
+    }
   };
 
   return (

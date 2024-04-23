@@ -14,6 +14,8 @@ import { UsersUniversityStatus } from "@/utils/interface/user-university-status/
 import { fetcher } from "@/libs/axios/fetcher";
 import { createUser } from "@/services/dashboard/dashboard.service";
 import { CreateUserUniversityModel } from "@/utils/interface/user-university/user-university.interface";
+import { enqueueSnackbar } from "notistack";
+import { AxiosError } from "axios";
 
 const CreateUserUniversitySchema = yup
   .object({
@@ -47,7 +49,7 @@ const CreateUserUniversitySchema = yup
 
 const CreateUserUniversitySection = () => {
   const { push } = useRouter();
-  
+
   const { data: dataStatus } = useSWR<UsersUniversityStatus[]>(
     'users-university-status',
     fetcher
@@ -76,8 +78,14 @@ const CreateUserUniversitySection = () => {
   });
 
   const onSubmit = async (data: CreateUserUniversityModel) => {
-    await createUser(data);
-    push('/dashboard');
+    try {
+      await createUser(data);
+      push('/dashboard');
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        enqueueSnackbar(err.message, { variant: 'error', autoHideDuration: 3000 });
+      }
+    }
   };
 
   const {

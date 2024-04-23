@@ -14,6 +14,8 @@ import { UsersUniversityStatus } from "@/utils/interface/user-university-status/
 import { fetcher } from "@/libs/axios/fetcher";
 import { EditUserUniversityModel, UsersUniversity } from "@/utils/interface/user-university/user-university.interface";
 import { editUser } from "@/services/dashboard/dashboard.service";
+import { enqueueSnackbar } from "notistack";
+import { AxiosError } from "axios";
 
 const EditUserUniversitySchema = yup
   .object({
@@ -73,8 +75,16 @@ const EditUserUniversitySection = ({ usersUniversity }: { usersUniversity?: User
   const onSubmit = async (data: EditUserUniversityModel) => {
     // console.log(data);
     if (usersUniversity?.id) {
-      await editUser(usersUniversity?.id, data);
-      push('/dashboard');      
+      try {
+        await editUser(usersUniversity?.id, data);
+        push('/dashboard');
+      } catch (err) {
+        console.log(err);
+        if (err instanceof AxiosError) {
+          
+          enqueueSnackbar(err?.message, { variant: 'error', autoHideDuration: 3000 });
+        }
+      }
     }
   };
 

@@ -6,6 +6,8 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import TextField from "../../components/hook-form/InputForm"
 import { changePassword } from "@/services/auth/auth.service";
+import { enqueueSnackbar } from "notistack";
+import { AxiosError } from "axios";
 
 interface ForgotPasswordModel {
   oldPassword: string;
@@ -35,9 +37,14 @@ const ForgotPasswordSection = () => {
   } = methods;
 
   const onSubmit = async (data: ForgotPasswordModel) => {
-    // console.log(data);
+    try {
     await changePassword(data.oldPassword, data.newPassword);
-    push('/dashboard');
+    push('/dashboard');      
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        enqueueSnackbar(err.message, { variant: 'error', autoHideDuration: 3000 });
+      }
+    }
   };
 
   return (

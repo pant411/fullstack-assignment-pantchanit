@@ -5,6 +5,8 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import TextField from "../../components/hook-form/InputForm"
 import { useAuth } from "@/stores/auth/hooks/auth.hook";
+import { ErrorResponse } from "@/utils/interface/responses/error-response.interface"
+import { enqueueSnackbar } from "notistack";
 
 interface LoginModel {
   email: string;
@@ -35,7 +37,12 @@ const LoginSection = () => {
   } = methods;
 
   const onSubmit = async (data: LoginModel) => {
-    await login(data.email, data.password);
+    try {
+      await login(data.email, data.password);
+    } catch (err) {
+      const errorResponse = err as ErrorResponse;
+      enqueueSnackbar(errorResponse.message, { variant: 'error', autoHideDuration: 3000 });
+    }
   };
 
   return (

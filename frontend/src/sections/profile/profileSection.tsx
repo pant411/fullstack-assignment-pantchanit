@@ -10,6 +10,8 @@ import DatepickerForm from "@/components/hook-form/DatepickerForm";
 import SelectForm from "@/components/hook-form/SelectForm";
 import { editProfile } from "@/services/auth/auth.service";
 import { ProfileModel } from "@/utils/interface/user.interface";
+import { enqueueSnackbar } from "notistack";
+import { AxiosError } from "axios";
 
 const ProfileSchema = yup
   .object({
@@ -49,8 +51,14 @@ const ProfileSection = ({ profile }: { profile?: ProfileModel }) => {
   const onSubmit = async (data: ProfileModel) => {
     // console.log(data);
     if (profile?.id) {
-      await editProfile(profile.id, data);
-      push('/dashboard');
+      try {
+        await editProfile(profile.id, data);
+        push('/dashboard');        
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          enqueueSnackbar(err.message, { variant: 'error', autoHideDuration: 3000 });
+        }
+      }
     }
   };
 
