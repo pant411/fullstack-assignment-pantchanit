@@ -7,7 +7,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthenticationAdminMiddleware } from './shared/middlewares/authentication-admin.middleware';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthenticationMiddleware } from './shared/middlewares/authentication.middleware';
 import { UsersUniversityModule } from './users-university/users-university.module';
 import { UsersUniversityStatusModule } from './users-university-status/users-university-status.module';
 
@@ -23,7 +22,7 @@ import { UsersUniversityStatusModule } from './users-university-status/users-uni
         username: configService.get('DB_USER'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        synchronize: true,
+        synchronize: configService.get('APP_MODE') === 'production' ? false : true,
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
       }),
       inject: [ConfigService],
