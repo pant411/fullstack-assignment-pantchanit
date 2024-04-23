@@ -11,7 +11,6 @@ import SelectForm from "@/components/hook-form/SelectForm";
 import { editProfile } from "@/services/auth/auth.service";
 import { ProfileModel } from "@/utils/interface/user.interface";
 import { useSnackbar } from "notistack";
-import { AxiosError } from "axios";
 import { ErrorResponse } from "@/utils/interface/responses/error-response.interface";
 
 const ProfileSchema = yup
@@ -56,10 +55,14 @@ const ProfileSection = ({ profile }: { profile?: ProfileModel }) => {
     if (profile?.id) {
       try {
         await editProfile(profile.id, data);
-        push('/dashboard');        
+        push('/dashboard');
       } catch (err) {
         const errorResponse = err as ErrorResponse;
-        enqueueSnackbar(errorResponse.message, { variant: 'error', autoHideDuration: 3000 });
+        enqueueSnackbar(
+          errorResponse.message, {
+          variant: 'error',
+          autoHideDuration: 3000
+        });
       }
     }
   };

@@ -57,9 +57,6 @@ export class UsersUniversity {
   @Column({ name: 'province' })
   province: string;
 
-  @Column({ name: 'country' })
-  country: string;
-
   @Column({ name: 'zip_code' })
   zipCode: string;
 

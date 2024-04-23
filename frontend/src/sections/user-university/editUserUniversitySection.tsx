@@ -9,7 +9,7 @@ import { GENDER } from "@/utils/enums/gender.enum";
 import DatepickerForm from "@/components/hook-form/DatepickerForm";
 import SelectForm from "@/components/hook-form/SelectForm";
 import { ROLE_USER_UNIVERSITY } from "@/utils/interface/user-university/enums/role-user-university.enum";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { UsersUniversityStatus } from "@/utils/interface/user-university-status/user-university-status.interface";
 import { fetcher } from "@/libs/axios/fetcher";
 import { EditUserUniversityModel, UsersUniversity } from "@/utils/interface/user-university/user-university.interface";
@@ -33,7 +33,6 @@ const EditUserUniversitySchema = yup
     subDistrict: yup.string().required('กรุณากรอกตำบล/แขวง'),
     city: yup.string().required('กรุณากรอกอำเภอ/เขต'),
     province: yup.string().required('กรุณากรอกจังหวัด'),
-    country: yup.string().required('กรุณากรอกประเทศ'),
     zipCode: yup.string().required('กรุณากรอกรหัสไปรษณีย์'),
     role: yup.string().oneOf([
       ROLE_USER_UNIVERSITY.STUDENT,
@@ -66,7 +65,6 @@ const EditUserUniversitySection = ({ usersUniversity }: { usersUniversity?: User
       subDistrict: usersUniversity?.subDistrict || '',
       city: usersUniversity?.city || '',
       province: usersUniversity?.province || '',
-      country: usersUniversity?.country || '',
       zipCode: usersUniversity?.zipCode || '',
       role: usersUniversity?.role || ROLE_USER_UNIVERSITY.TEACHER,
       statusId: usersUniversity?.statusId || 2,
@@ -80,6 +78,7 @@ const EditUserUniversitySection = ({ usersUniversity }: { usersUniversity?: User
       try {
         await editUser(usersUniversity?.id, data);
         push('/dashboard');
+        mutate(`admin/users-university/${usersUniversity?.id}`)
       } catch (err) {
         const errorResponse = err as ErrorResponse;
         enqueueSnackbar(errorResponse.message, { variant: 'error', autoHideDuration: 3000 });
@@ -205,13 +204,13 @@ const EditUserUniversitySection = ({ usersUniversity }: { usersUniversity?: User
               <label className="label">
                 <span className="text-base label-text">จังหวัด</span>
               </label>
-              <TextField name="subDistrict" type="text" placeholder="จังหวัด" />
+              <TextField name="province" type="text" placeholder="จังหวัด" />
             </div>
             <div className="w-full">
               <label className="label">
                 <span className="text-base label-text">รหัสไปรษณีย์</span>
               </label>
-              <TextField name="city" type="text" placeholder="รหัสไปรษณีย์" />
+              <TextField name="zipCode" type="text" placeholder="รหัสไปรษณีย์" />
             </div>
           </div>
 

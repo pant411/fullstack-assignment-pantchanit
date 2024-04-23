@@ -61,11 +61,6 @@ export class UpdateUsersUniversityDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  country: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
   zipCode: string;
 
   @ApiPropertyOptional()

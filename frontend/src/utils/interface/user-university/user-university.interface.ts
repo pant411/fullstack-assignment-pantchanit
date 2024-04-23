@@ -14,7 +14,6 @@ export interface UsersUniversity {
   subDistrict: string;
   city: string;
   province: string;
-  country: string;
   zipCode: string;
   role: ROLE_USER_UNIVERSITY;
   statusId: number;
@@ -35,7 +34,6 @@ export interface CreateUserUniversityModel {
   subDistrict: string;
   city: string;
   province: string;
-  country: string;
   zipCode: string;
   role: ROLE_USER_UNIVERSITY;
   statusId: number;
@@ -52,7 +50,6 @@ export interface EditUserUniversityModel {
   subDistrict: string;
   city: string;
   province: string;
-  country: string;
   zipCode: string;
   role: ROLE_USER_UNIVERSITY;
   statusId: number;

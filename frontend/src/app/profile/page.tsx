@@ -7,6 +7,7 @@ import { fetcher } from "@/libs/axios/fetcher";
 import ProfileSection from "@/sections/profile/profileSection";
 import { useAuth } from "@/stores/auth/hooks/auth.hook";
 import { ProfileModel } from "@/utils/interface/user.interface";
+import Loading from "@/components/loading/Loading";
 
 
 const Profile = () => {
@@ -22,7 +23,7 @@ const Profile = () => {
   const { data, isLoading } = useSWR<ProfileModel>('admin/users/me', fetcher);
 
   if (!user && isLoading) {
-    return <div>loading ...</div>
+    return <Loading />
   }
 
   return (

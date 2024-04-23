@@ -1,6 +1,6 @@
 'use client'
 
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
@@ -10,7 +10,6 @@ import DatepickerForm from "@/components/hook-form/DatepickerForm";
 import SelectForm from "@/components/hook-form/SelectForm";
 import { register } from "@/services/auth/auth.service";
 import { useSnackbar } from "notistack";
-import { AxiosError } from "axios";
 import { ErrorResponse } from "@/utils/interface/responses/error-response.interface";
 
 interface RegisterModel {
@@ -29,20 +28,22 @@ const RegisterSchema = yup
     lastname: yup.string().required('กรุณากรอกนามสกุล'),
     email: yup.string().email().required('กรุณากรอกนามสกุล'),
     password: yup.string()
-    .min(8, 'รหัสผ่านควรมีความยาวอย่างน้อย 8 อักขระ')
-    .matches(/[a-zA-Z0-9]/, 'รหัสผ่านต้องประกอบด้วยอักขระภาษาอังกฤษและตัวเลข')
-    .required('กรุณากรอกรหัสผ่าน'),
+      .min(8, 'รหัสผ่านควรมีความยาวอย่างน้อย 8 อักขระ')
+      .matches(/[a-zA-Z0-9]/, 'รหัสผ่านต้องประกอบด้วยอักขระภาษาอังกฤษและตัวเลข')
+      .required('กรุณากรอกรหัสผ่าน'),
     DOB: yup.string().required('กรุณากรอกวันเกิด'),
     gender: yup.string().oneOf([
       GENDER.NOT_SPECIFIED,
-      GENDER.MALE,GENDER.
-      FEMALE
+      GENDER.MALE, GENDER.
+        FEMALE
     ]).required('กรุณาระบุเพศ'),
     phoneNumber: yup.string().required('กรุณากรอกเบอร์โทรศัพท์'),
   })
   .required();
 
 const RegisterSection = () => {
+  const { push } = useRouter();
+
   const { enqueueSnackbar } = useSnackbar();
 
   const methods = useForm<RegisterModel>({
@@ -65,8 +66,8 @@ const RegisterSection = () => {
   const onSubmit = async (data: RegisterModel) => {
     // console.log(data);
     try {
-    await register(data);
-    redirect('/');      
+      await register(data);
+      push('/');
     } catch (err) {
       const errorResponse = err as ErrorResponse;
       enqueueSnackbar(errorResponse.message, { variant: 'error', autoHideDuration: 3000 });

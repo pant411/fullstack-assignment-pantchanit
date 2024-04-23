@@ -37,7 +37,6 @@ const CreateUserUniversitySchema = yup
     subDistrict: yup.string().required('กรุณากรอกตำบล/แขวง'),
     city: yup.string().required('กรุณากรอกอำเภอ/เขต'),
     province: yup.string().required('กรุณากรอกจังหวัด'),
-    country: yup.string().required('กรุณากรอกประเทศ'),
     zipCode: yup.string().required('กรุณากรอกรหัสไปรษณีย์'),
     role: yup.string().oneOf([
       ROLE_USER_UNIVERSITY.STUDENT,
@@ -71,7 +70,6 @@ const CreateUserUniversitySection = () => {
       subDistrict: '',
       city: '',
       province: '',
-      country: '',
       zipCode: '',
       role: ROLE_USER_UNIVERSITY.TEACHER,
       statusId: 2,
@@ -210,13 +208,13 @@ const CreateUserUniversitySection = () => {
               <label className="label">
                 <span className="text-base label-text">จังหวัด</span>
               </label>
-              <TextField name="subDistrict" type="text" placeholder="จังหวัด" />
+              <TextField name="province" type="text" placeholder="จังหวัด" />
             </div>
             <div className="w-full">
               <label className="label">
                 <span className="text-base label-text">รหัสไปรษณีย์</span>
               </label>
-              <TextField name="city" type="text" placeholder="รหัสไปรษณีย์" />
+              <TextField name="zipCode" type="text" placeholder="รหัสไปรษณีย์" />
             </div>
           </div>
 

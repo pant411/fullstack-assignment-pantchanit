@@ -70,11 +70,6 @@ export class CreateUsersUniversityDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  country: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
   zipCode: string;
 
   @ApiProperty()

@@ -18,7 +18,7 @@ export const login = async (email: string, password: string) => {
       password,
     });
     const { accessToken } = response.data;
-    Cookies.set(TOKEN_COOKIE_NAME, accessToken, { expires: 10/24 });
+    Cookies.set(TOKEN_COOKIE_NAME, accessToken, { expires: 10 / 24 });
     return accessToken;
   } catch (error) {
     throw error;
@@ -32,7 +32,7 @@ export const logout = () => {
 
 export const isAuthenticated = () => {
   const token = Cookies.get(TOKEN_COOKIE_NAME);
-  if(token) axiosInstance.defaults.headers.common.Authorization = `bearer ${token}`;
+  if (token) axiosInstance.defaults.headers.common.Authorization = `bearer ${token}`;
   return !!token;
 };
 

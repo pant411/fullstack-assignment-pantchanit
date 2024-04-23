@@ -13,6 +13,7 @@ import { GENDER } from "@/utils/enums/gender.enum";
 import Tab from "@/components/tab/Tab";
 import { ROLE_USER_UNIVERSITY } from "@/utils/interface/user-university/enums/role-user-university.enum";
 import { deleteUser } from "@/services/dashboard/dashboard.service";
+import Loading from "@/components/loading/Loading";
 
 const headers = [
   {
@@ -71,7 +72,7 @@ export default function Dashboard() {
   const listData = data?.items || [];
 
   if (isLoading) {
-    return <div>Loading ...</div>
+    return <Loading />
   }
 
   const handleDeleteUser = async () => {

@@ -1,18 +1,33 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AuthContext } from "../contexts/auth.context";
-import { isAuthenticated, login, logout } from "@/services/auth/auth.service";
-import useSWR from "swr";
-import { fetcher } from "@/libs/axios/fetcher";
+import { getProfile, isAuthenticated, login, logout } from "@/services/auth/auth.service";
 import { User } from "@/utils/interface/user.interface";
 
 export const AuthProvider = ({ children }: {
   children: React.ReactNode;
 }) => {
+
   const [authenticated, setAuthenticated] = useState<boolean>(isAuthenticated());
 
-  const { data, isLoading } = useSWR<User>('admin/users/me', fetcher);
+  const [profile, setProfile] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        setLoading(true);
+        const data = await getProfile();
+        setProfile(data);
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   const handleLogin = async (email: string, password: string) => {
     try {
@@ -20,7 +35,6 @@ export const AuthProvider = ({ children }: {
       setAuthenticated(true);
       window.location.href = '/dashboard';
     } catch (error) {
-      console.error('Login failed:', error);
       throw error;
     }
   };
@@ -30,17 +44,17 @@ export const AuthProvider = ({ children }: {
     logout();
   };
 
-return (
-  <AuthContext.Provider
-    value={{
-      isAuthenticated: authenticated,
-      user: data || null,
-      login: handleLogin,
-      logout: handleLogout,
-      loading: isLoading,
-    }}
-  >
-    {children}
-  </AuthContext.Provider>
-);
+  return (
+    <AuthContext.Provider
+      value={{
+        isAuthenticated: authenticated,
+        user: profile || null,
+        login: handleLogin,
+        logout: handleLogout,
+        loading,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
