@@ -25,6 +25,29 @@ services:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: mlkgsnghlsgehioneiogkjhn
 
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - 3000:3000
+    # env_file:
+    #   - backend/.env.docker
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - 3001:3001
+    # env_file:
+    #   - frontend/.env.docker
+    depends_on:
+      - db
+      - backend
+
 volumes:
   mysql-data:
     driver: local

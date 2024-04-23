@@ -1,0 +1,12 @@
+# compiled output
+/backend/dist
+/backend/node_modules
+/backend/.env
+# compiled output
+/frontend/.next
+/frontend/node_modules
+/frontend/.env
+
+
+# OS
+.DS_Store
