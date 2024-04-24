@@ -1,4 +1,4 @@
-# fullstack-assignment-pantchanit
+# Fullstack-Assignment-Pantchanit
 
 ## วิธีการติดตั้ง
 
@@ -12,7 +12,11 @@
 
 ## Backend
 - URL: http://localhost:3000
-- API DOCS: http://localhost:3000/api/v1/docs
-
+- API Document: http://localhost:3000/api/v1/docs
+- phpMyAdmin: http://localhost:8081
+  
 ## Frontend
 - URL: http://localhost:3001
+  
+## ER diagram
+![alt text](https://github.com/pant411/fullstack-assignment-pantchanit/blob/main/database/Full-Stack-Test-Pantchanit.drawio.png?raw=true)
