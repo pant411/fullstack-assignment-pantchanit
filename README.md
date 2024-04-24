@@ -1,5 +1,5 @@
 # Fullstack-Assignment-Pantchanit
-
+โปรเจคนี้จะบรรจุ Application ที่ได้พัฒนาขึ้นลงใน docker container
 ## วิธีการติดตั้ง
 
 1. รันคำสั่ง git clone https://github.com/pant411/fullstack-assignment-pantchanit.git 
