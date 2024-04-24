@@ -8,7 +8,7 @@
 3.	เข้าไปที่ phpMyAdmin (http://localhost:8081) 
     Username: root
     Password: mlkgsnghlsgehioneiogkjhn
-    เมื่อ login สำเร็จให้เข้าไปที่ database: db-university เพื่อทำจาก import db-university.sql (https://github.com/pant411/fullstack-assignment-pantchanit/blob/main/database/db-university.sql) 
+    เมื่อ login สำเร็จให้เข้าไปที่ database: db-university เพื่อ import โครงสร้างของระบบฐานข้อมูลจากไฟล์ db-university.sql (https://github.com/pant411/fullstack-assignment-pantchanit/blob/main/database/db-university.sql) 
 
 ## Backend
 พัฒนาด้วย Nestjs, MySQL, และ Typeorm
