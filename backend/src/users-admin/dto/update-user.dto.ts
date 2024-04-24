@@ -1,5 +1,3 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateUserDto } from './create-user.dto';
 import { IsDateString, IsEmail, IsIn, IsNotEmpty, IsOptional, IsString, Matches, MinLength } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { GENDER } from '../shared/enums/gender.enum';
@@ -23,15 +21,15 @@ export class UpdateUserDto {
   @ApiPropertyOptional()
   @IsOptional()
   @MinLength(
-    8, 
-    { 
-      message: 'Password is too short - should be 8 chars minimum.' 
+    8,
+    {
+      message: 'Password is too short - should be 8 chars minimum.'
     }
   )
   @Matches(
-    /[a-zA-Z0-9]/, 
-    { 
-      message: 'Password can only contain Latin letters and number.' 
+    /[a-zA-Z0-9]/,
+    {
+      message: 'Password can only contain Latin letters and number.'
     }
   )
   @IsString()
@@ -42,7 +40,7 @@ export class UpdateUserDto {
   @IsDateString()
   DOB: Date; // dateOfBirth 
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ enum: GENDER })
   @IsOptional()
   @IsIn([GENDER.FEMALE, GENDER.MALE, GENDER.NOT_SPECIFIED])
   gender: GENDER;

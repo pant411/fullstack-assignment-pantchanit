@@ -37,6 +37,16 @@ export class UsersUniversityController {
           zipCode: "string",
           role: "Student or Teacher",
           statusId: 2,
+          usersUniversityStatus: {
+            id: 2,
+            name: "Inactive",
+            description: null,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          deletedAt: null,
         },
         message: 'Create user of university successfully',
         statusCode: HttpStatus.CREATED,
@@ -61,7 +71,7 @@ export class UsersUniversityController {
     schema: {
       example: {
         data: {
-          "items": [{
+          items: [{
             id: 1,
             firstname: "string",
             lastname: "string",
@@ -76,6 +86,16 @@ export class UsersUniversityController {
             zipCode: "string",
             role: "Student or Teacher",
             statusId: 2,
+            usersUniversityStatus: {
+              id: 2,
+              name: "Inactive",
+              description: null,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            },
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            deletedAt: null,
           }],
           pageMeta: {
             page: 1,
@@ -125,6 +145,16 @@ export class UsersUniversityController {
           zipCode: "string",
           role: "Student or Teacher",
           statusId: 2,
+          usersUniversityStatus: {
+            id: 2,
+            name: "Inactive",
+            description: null,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          deletedAt: null,
         },
         message: 'Found user of university successfully',
         statusCode: HttpStatus.OK,
@@ -168,7 +198,10 @@ export class UsersUniversityController {
             description: null,
             createdAt: new Date(),
             updatedAt: new Date(),
-          }
+          },
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          deletedAt: null,
         },
         message: 'Update user of university successfully',
         statusCode: HttpStatus.OK,

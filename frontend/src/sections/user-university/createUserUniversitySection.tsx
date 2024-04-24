@@ -220,7 +220,7 @@ const CreateUserUniversitySection = () => {
           </div>
 
           <div>
-            <button className="btn btn-block btn-info">สมัครสมาชิก</button>
+            <button className="btn btn-block btn-info">เพิ่มสมาชิก</button>
           </div>
         </form>
       </FormProvider>

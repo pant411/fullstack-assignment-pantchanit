@@ -25,22 +25,22 @@ export class CreateUsersUniversityDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsEmail()
-  email: string;   
-  
+  email: string;
+
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  password: string;  
+  password: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsDateString()
   DOB: Date; // dateOfBirth 
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ enum: GENDER })
   @IsOptional()
   @IsIn([GENDER.FEMALE, GENDER.MALE, GENDER.NOT_SPECIFIED])
-  gender: GENDER;  
+  gender: GENDER;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -72,9 +72,9 @@ export class CreateUsersUniversityDto {
   @IsString()
   zipCode: string;
 
-  @ApiProperty()
+  @ApiProperty({ enum: ROLE_USER_UNIVERSITY })
   @IsNotEmpty()
-  @IsIn([ROLE_USER_UNIVERSITY.STUDENT,ROLE_USER_UNIVERSITY.TEACHER])
+  @IsIn([ROLE_USER_UNIVERSITY.STUDENT, ROLE_USER_UNIVERSITY.TEACHER])
   role: ROLE_USER_UNIVERSITY;
 
   @ApiProperty()

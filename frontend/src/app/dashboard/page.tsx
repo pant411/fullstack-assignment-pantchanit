@@ -27,6 +27,9 @@ const headers = [
     columnHeader: 'Role',
   },
   {
+    columnHeader: 'สถานะ',
+  },
+  {
     columnHeader: 'อีเมล์',
   },
   {
@@ -131,6 +134,7 @@ export default function Dashboard() {
                     <td align={'center'} >
                       <div className="badge badge-success">{ele.role}</div>
                     </td>
+                    <td align={'center'} >{ele.usersUniversityStatus.name}</td>
                     <td align={'center'} >{ele.email}</td>
                     <td align={'center'} >{format(ele.DOB, 'dd-MM-yyyy')}</td>
                     <td align={'center'} >

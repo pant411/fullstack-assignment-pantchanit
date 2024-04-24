@@ -17,21 +17,21 @@ export class UpdateUsersUniversityDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsEmail()
-  email: string;    
+  email: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsDateString()
   DOB: Date; // dateOfBirth 
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ enum: GENDER })
   @IsOptional()
   @IsIn([
-    GENDER.FEMALE, 
-    GENDER.MALE, 
+    GENDER.FEMALE,
+    GENDER.MALE,
     GENDER.NOT_SPECIFIED
   ])
-  gender: GENDER;  
+  gender: GENDER;
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -63,9 +63,9 @@ export class UpdateUsersUniversityDto {
   @IsString()
   zipCode: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ enum: ROLE_USER_UNIVERSITY})
   @IsOptional()
-  @IsIn([ROLE_USER_UNIVERSITY.STUDENT,ROLE_USER_UNIVERSITY.TEACHER])
+  @IsIn([ROLE_USER_UNIVERSITY.STUDENT, ROLE_USER_UNIVERSITY.TEACHER])
   role: ROLE_USER_UNIVERSITY;
 
   @ApiPropertyOptional()

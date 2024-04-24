@@ -1,5 +1,6 @@
 import { GENDER } from "@/utils/enums/gender.enum";
 import { ROLE_USER_UNIVERSITY } from "./enums/role-user-university.enum";
+import { UsersUniversityStatus } from "../user-university-status/user-university-status.interface";
 
 export interface UsersUniversity {
   id: number;
@@ -17,6 +18,7 @@ export interface UsersUniversity {
   zipCode: string;
   role: ROLE_USER_UNIVERSITY;
   statusId: number;
+  usersUniversityStatus: UsersUniversityStatus;
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
