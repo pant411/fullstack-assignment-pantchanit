@@ -39,7 +39,7 @@ export class UserAdminController {
           phoneNumber: "string",
           createdAt: new Date(),
           updatedAt: new Date(),
-          deletedAt: new Date(),
+          deletedAt: null,
         },
         message: 'Found user profile',
         statusCode: HttpStatus.OK,
@@ -60,12 +60,12 @@ export class UserAdminController {
   @ApiBody({ type: ResetPasswordDto })
   @ApiOperation({ summary: 'เปลี่ยนรหัสผ่านของผู้ใช้งานระบบนี้' })
   @ApiCreatedResponse({
-    status: HttpStatus.CREATED,
+    status: HttpStatus.OK,
     description: 'Reset Password successfully',
     schema: {
       example: {
         message: 'Reset Password successfully',
-        statusCode: HttpStatus.CREATED,
+        statusCode: HttpStatus.OK,
       },
     },
   })
@@ -77,14 +77,14 @@ export class UserAdminController {
     await this.userService.resetPassword(id, resetPasswordDto);    
     return {
       message: 'Reset Password successfully',
-      statusCode: HttpStatus.CREATED,
+      statusCode: HttpStatus.OK,
     }
   }  
 
   @Patch(':id')
   @ApiOperation({ summary: 'แก้ไขโปรไฟล์ของผู้ใช้งานระบบนี้' })
   @ApiCreatedResponse({
-    status: HttpStatus.CREATED,
+    status: HttpStatus.OK,
     description: 'Update user successfully',
     schema: {
       example: {
@@ -98,10 +98,10 @@ export class UserAdminController {
           phoneNumber: "string",
           createdAt: new Date(),
           updatedAt: new Date(),
-          deletedAt: new Date(),
+          deletedAt: null,
         },
         message: 'Update user successfully',
-        statusCode: HttpStatus.CREATED,
+        statusCode: HttpStatus.OK,
       },
     },
   })
@@ -110,7 +110,7 @@ export class UserAdminController {
     return {
       data,
       message: 'Update user successfully',
-      statusCode: HttpStatus.CREATED,
+      statusCode: HttpStatus.OK,
     }
   }
 }

@@ -37,7 +37,7 @@ export class AuthAdminController {
           phoneNumber: "string",
           createdAt: new Date(),
           updatedAt: new Date(),
-          deletedAt: new Date(),
+          deletedAt: null,
         },
         message: 'Register successfully',
         statusCode: HttpStatus.CREATED,
@@ -62,7 +62,7 @@ export class AuthAdminController {
     schema: {
       example: {
         data: {
-          accessToken: "Bearer ${someToken}",
+          accessToken: "${someToken}",
         },
         message: 'Login successfully',
         statusCode: HttpStatus.CREATED,

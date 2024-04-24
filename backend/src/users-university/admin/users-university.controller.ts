@@ -35,7 +35,7 @@ export class UsersUniversityController {
           city: "string",
           province: "string",
           zipCode: "string",
-          role: "string",
+          role: "Student or Teacher",
           statusId: 2,
         },
         message: 'Create user of university successfully',
@@ -74,16 +74,16 @@ export class UsersUniversityController {
             city: "string",
             province: "string",
             zipCode: "string",
-            role: "string",
+            role: "Student or Teacher",
             statusId: 2,
           }],
-          "pageMeta": {
-            "page": 1,
-            "totalPage": 1,
-            "totalItemInPage": 1,
-            "totalItem":1,
-            "hasPreviousPage": false,
-            "hasNextPage": false
+          pageMeta: {
+            page: 1,
+            totalPage: 1,
+            totalItemInPage: 1,
+            totalItem:1,
+            hasPreviousPage: false,
+            hasNextPage: false
           },
         },
         message: 'Found List user of university successfully',
@@ -123,7 +123,7 @@ export class UsersUniversityController {
           city: "string",
           province: "string",
           zipCode: "string",
-          role: "string",
+          role: "Student or Teacher",
           statusId: 2,
         },
         message: 'Found user of university successfully',
@@ -143,7 +143,7 @@ export class UsersUniversityController {
   @Patch(':id')
   @ApiOperation({ summary: 'แก้ไขข้อมูลสมาชิกของ university ของ id ต่างๆ' })
   @ApiCreatedResponse({
-    status: HttpStatus.CREATED,
+    status: HttpStatus.OK,
     description: 'Update user of university successfully',
     schema: {
       example: {
@@ -160,11 +160,18 @@ export class UsersUniversityController {
           city: "string",
           province: "string",
           zipCode: "string",
-          role: "string",
+          role: "Student or Teacher",
           statusId: 2,
+          usersUniversityStatus: {
+            id: 2,
+            name: "Inactive",
+            description: null,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          }
         },
         message: 'Update user of university successfully',
-        statusCode: HttpStatus.CREATED,
+        statusCode: HttpStatus.OK,
       },
     },
   })
@@ -176,7 +183,7 @@ export class UsersUniversityController {
     return {
       data,
       message: 'Update user of university successfully',
-      statusCode: HttpStatus.CREATED,
+      statusCode: HttpStatus.OK,
     };
   }
 
