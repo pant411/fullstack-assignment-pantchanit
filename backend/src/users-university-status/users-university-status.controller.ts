@@ -16,13 +16,13 @@ export class UsersUniversityStatusController {
     description: 'Found status',
     schema: {
       example: {
-        data: {
+        data: [{
           id: 1,
           name: "Active",
           description: null,
           createdAt: new Date(),
           updatedAt: new Date()
-        },
+        }],
         message: 'Found status',
         statusCode: HttpStatus.OK,
       },
