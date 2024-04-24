@@ -45,8 +45,8 @@ CREATE TABLE `users_admin` (
 -- Dumping data for table `users_admin`
 --
 
-INSERT INTO `users_admin` (`id`, `firstname`, `lastname`, `email`, `password`, `dob`, `gender`, `phone_number`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Admin1', 'Company', 'admin1@company.com', '$2b$12$7Rw4nXSayUOXp.0MbS5mL.8qAyvEpV4b81N0IcTEAVmXRus8MuUjW', '2024-04-22 11:07:27', 'Not specified', '0819916627', '2024-04-22 04:09:30.550040', '2024-04-22 04:09:30.550040', NULL);
+-- INSERT INTO `users_admin` (`id`, `firstname`, `lastname`, `email`, `password`, `dob`, `gender`, `phone_number`, `created_at`, `updated_at`, `deleted_at`) VALUES
+-- (1, 'Admin1', 'Company', 'admin1@company.com', '$2b$12$7Rw4nXSayUOXp.0MbS5mL.8qAyvEpV4b81N0IcTEAVmXRus8MuUjW', '2024-04-22 11:07:27', 'Not specified', '0819916627', '2024-04-22 04:09:30.550040', '2024-04-22 04:09:30.550040', NULL);
 
 -- --------------------------------------------------------
 

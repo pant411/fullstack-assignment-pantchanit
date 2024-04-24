@@ -43,6 +43,11 @@ const ForgotPasswordSection = () => {
   const onSubmit = async (data: ForgotPasswordModel) => {
     try {
     await changePassword(data.oldPassword, data.newPassword);
+    enqueueSnackbar(
+      'Change password successfully', {
+      variant: 'success',
+      autoHideDuration: 3000
+    });
     push('/dashboard');      
     } catch (err) {
       const errorResponse = err as ErrorResponse;

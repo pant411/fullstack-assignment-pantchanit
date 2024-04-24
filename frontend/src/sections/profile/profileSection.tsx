@@ -55,6 +55,11 @@ const ProfileSection = ({ profile }: { profile?: ProfileModel }) => {
     if (profile?.id) {
       try {
         await editProfile(profile.id, data);
+        enqueueSnackbar(
+          'Edit profile successfully', {
+          variant: 'success',
+          autoHideDuration: 3000
+        });
         push('/dashboard');
       } catch (err) {
         const errorResponse = err as ErrorResponse;

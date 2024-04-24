@@ -77,6 +77,7 @@ const EditUserUniversitySection = ({ usersUniversity }: { usersUniversity?: User
     if (usersUniversity?.id) {
       try {
         await editUser(usersUniversity?.id, data);
+        enqueueSnackbar('Edit user successfully', { variant: 'success', autoHideDuration: 3000 });
         push('/dashboard');
         mutate(`admin/users-university/${usersUniversity?.id}`)
       } catch (err) {

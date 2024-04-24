@@ -14,6 +14,7 @@ import Tab from "@/components/tab/Tab";
 import { ROLE_USER_UNIVERSITY } from "@/utils/interface/user-university/enums/role-user-university.enum";
 import { deleteUser } from "@/services/dashboard/dashboard.service";
 import Loading from "@/components/loading/Loading";
+import { useSnackbar } from "notistack";
 
 const headers = [
   {
@@ -51,6 +52,7 @@ export default function Dashboard() {
   const { replace } = useRouter();
   const { isAuthenticated } = useAuth();
   const [selectId, setSelectId] = useState<number | null>(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -78,6 +80,7 @@ export default function Dashboard() {
   const handleDeleteUser = async () => {
     if (selectId) {
       await deleteUser(selectId);
+      enqueueSnackbar('Delete User Successfully', { variant: 'success', autoHideDuration: 3000 });
       setSelectId(null);
       mutate();
     }

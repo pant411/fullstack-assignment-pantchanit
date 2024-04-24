@@ -80,6 +80,7 @@ const CreateUserUniversitySection = () => {
   const onSubmit = async (data: CreateUserUniversityModel) => {
     try {
       await createUser(data);
+      enqueueSnackbar('Create user Successfully', { variant: 'success', autoHideDuration: 3000 });
       push('/dashboard');
     } catch (err) {
       const errorResponse = err as ErrorResponse;

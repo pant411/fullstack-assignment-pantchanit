@@ -67,6 +67,7 @@ const RegisterSection = () => {
     // console.log(data);
     try {
       await register(data);
+      enqueueSnackbar('Register Successfully', { variant: 'success', autoHideDuration: 3000 });
       push('/');
     } catch (err) {
       const errorResponse = err as ErrorResponse;
