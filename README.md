@@ -10,8 +10,6 @@
     Password: mlkgsnghlsgehioneiogkjhn
     เมื่อ login สำเร็จให้เข้าไปที่ database: db-university เพื่อทำจาก import db-university.sql (https://github.com/pant411/fullstack-assignment-pantchanit/blob/main/database/db-university.sql) 
 
-## วิธีการใช้งาน
-
 # Backend
 - URL: http://localhost:3000
 - API DOCS: http://localhost:3000/api/v1/docs
