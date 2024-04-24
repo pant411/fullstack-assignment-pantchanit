@@ -128,8 +128,8 @@ const EditUserUniversitySection = ({ usersUniversity }: { usersUniversity?: User
                 <span className="text-base label-text">ประเภทของสมาชิก</span>
               </label>
               <SelectForm name="role" renderOptions={<>
-                <option value={ROLE_USER_UNIVERSITY.TEACHER}>ครู</option>
-                <option value={ROLE_USER_UNIVERSITY.STUDENT}>นักเรียน</option>
+                <option value={ROLE_USER_UNIVERSITY.TEACHER}>Teacher</option>
+                <option value={ROLE_USER_UNIVERSITY.STUDENT}>Student</option>
               </>} />
             </div>
             <div className="w-full">

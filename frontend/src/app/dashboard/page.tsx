@@ -131,16 +131,12 @@ export default function Dashboard() {
                   <tr key={idx}>
                     <td align={'center'} >{ele.firstname}</td>
                     <td align={'center'} >{ele.lastname}</td>
-                    <td align={'center'} >
-                      <div className="badge badge-success">{ele.role}</div>
-                    </td>
+                    <td align={'center'} >{ele.role}</td>
                     <td align={'center'} >{ele.usersUniversityStatus.name}</td>
                     <td align={'center'} >{ele.email}</td>
                     <td align={'center'} >{format(ele.DOB, 'dd-MM-yyyy')}</td>
                     <td align={'center'} >
-                      <div className={`badge badge-${ele.gender === GENDER.FEMALE ? 'secondary' : 'info'}`}>
-                        {ele.gender}
-                      </div>
+                      {ele.gender === GENDER.FEMALE ? 'หญิง' : 'ชาย'}
                     </td>
                     <td align={'center'} >{ele.phoneNumber}</td>
 
