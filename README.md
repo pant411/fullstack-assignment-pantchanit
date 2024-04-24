@@ -11,11 +11,13 @@
     เมื่อ login สำเร็จให้เข้าไปที่ database: db-university เพื่อทำจาก import db-university.sql (https://github.com/pant411/fullstack-assignment-pantchanit/blob/main/database/db-university.sql) 
 
 ## Backend
+พัฒนาด้วย Nestjs, MySQL, และ Typeorm
 - URL: http://localhost:3000
 - API Document: http://localhost:3000/api/v1/docs
 - phpMyAdmin: http://localhost:8081
   
 ## Frontend
+พัฒนาด้วย Nextjs, React, Tailwind CSS, และ Daisy UI
 - URL: http://localhost:3001
   
 ## ER diagram
