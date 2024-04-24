@@ -2,9 +2,6 @@
 /mysql-data
 /phpmyadmin-data
 
-# OS
-.DS_Store
-
 # misc
 .DS_Store
 *.pem
